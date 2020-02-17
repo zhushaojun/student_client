@@ -49,7 +49,7 @@ export default {
     userName: "yzt",
     userStatus: "未认证",
     items: [
-      { title: "个人信息", icon: "mdi-account", route: "/studentinfo" },
+      { title: "学生信息", icon: "mdi-account", route: "/studentinfo" },
       { title: "学生列表", icon: "mdi-dialpad",route: "/studentlist" },
       { title: "学生注册", icon: "mdi-pencil", route: "/studentlogin"}
     ]

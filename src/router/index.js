@@ -13,7 +13,7 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes:[
   {
-    path: "/studentinfo/:id",
+    path: "/studentinfo/",
     name: "studentinfo",
     component: studentInfo
   },
