@@ -1,12 +1,12 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import Vuelidate from "vuelidate";
 import studentInfo from "../views/studentInfo.vue";
 import studentList from "../views/studentList.vue";
 import studentLogin from "../views/studentLogin.vue";
+import Home from "../views/Home.vue";
 
-Vue.use(VueRouter);
-
+Vue.use(VueRouter,Vuelidate);
 const routes = [
   {
     path: "/",
