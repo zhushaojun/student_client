@@ -1,8 +1,6 @@
 <template>
   <div class="studentInfo">
     <h1>This is an studentInfo page</h1>
-    <v-btn class="btn btn-success" @click=test()>获取数据</v-btn>
-    <p>{{this.infos}}</p>
   </div>
 </template>
 <script>
