@@ -9,7 +9,6 @@
           <div class="overline mb-4">
             <span class="title font-weight-light">学生个人信息</span>
           </div>
-          <!-- {{this.params.id}} -->
           <v-list-item-title class="mb-1 mb-4">姓名：{{infos.name}}</v-list-item-title>
           <v-list-item-title class="mb-1 mb-4">性别：{{infos.gender}}</v-list-item-title>
           <v-list-item-title class="mb-1 mb-4">学号：{{infos.student_id}}</v-list-item-title>
