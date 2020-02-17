@@ -1,13 +1,12 @@
 <template>
   <div class="studentInfo">
-    <h1>This is an studentInfo page</h1>
+    <h2>当前状态: {{student_id}}</h2>
   </div>
 </template>
 <script>
-
+import { mapState } from 'vuex';
 export default {
     data: () => ({
-    infos:[]
   }),
    methods: {
     test() {
@@ -17,6 +16,9 @@ export default {
         console.log(error);
       });
    }
-}
+  },
+  computed: {
+		...mapState(["student_id"])
+	},
 };
 </script>

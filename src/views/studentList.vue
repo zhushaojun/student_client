@@ -19,7 +19,11 @@
     :sort-desc="[false, true]"
     multi-sort
     class="elevation-1"
-  ></v-data-table>
+  >
+    <template v-slot:item.student_id="{item}">
+		  	<v-btn label text @click="updateInfo(item)">{{item.student_id}}</v-btn >
+	  </template>
+  </v-data-table>
        </v-card>
   </div>
   </div>
@@ -29,17 +33,18 @@
     data () {
       return {
         search: '',
+        testdata:"",
         headers: [
           {
-            text: 'name',
+            text: 'Name',
             align: 'left',
             sortable: false,
             value: 'name',
           },
           { text: 'Gender', value: 'gender' },
-          { text: 'student_id', value: 'student_id' },
+          { text: 'Student_Id', value: 'student_id' },
         ],
-        desserts: []
+        desserts: [],
     }
   },
   created () {
@@ -52,7 +57,14 @@
       .catch(function (error) { // 请求失败处理
         console.log(error);
       });
-      }
-    }
+      },
+      updateInfo(item) {
+			const index = this.desserts.indexOf(item)
+			this.testdata=this.desserts[index];
+			this.$store.commit("updateInfo",this.testdata)
+			this.$router.replace({path:'/studentinfo'})
+		},
+    },
+   
   };
 </script>
