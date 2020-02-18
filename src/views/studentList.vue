@@ -20,10 +20,10 @@
           multi-sort
           class="elevation-1"
         >
-          <template v-slot:item.student_id="{ item }">
+          <template v-slot:item.number="{ item }">
             <router-link
               :to="{ name: 'studentinfo', params: { id: item.id } }"
-              >{{ item.student_id }}</router-link
+              >{{ item.number }}</router-link
             >
           </template>
         </v-data-table>
@@ -38,14 +38,15 @@ export default {
       search: "",
       testdata: "",
       headers: [
+        { text: "序号", value: "id" },
         {
-          text: "Name",
+          text: "姓名",
           align: "left",
           sortable: false,
           value: "name"
         },
         { text: "Gender", value: "gender" },
-        { text: "Student_Id", value: "student_id" }
+        { text: "学号", value: "number" }
       ],
       desserts: []
     };

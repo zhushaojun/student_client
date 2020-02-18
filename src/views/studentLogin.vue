@@ -25,13 +25,13 @@
                   <p class="mt-2"><span class="red--text">*</span>学号</p>
                 </div>
                 <v-text-field
-                  v-model="student_id"
+                  v-model="number"
                   :error-messages="idErrors"
                   label="请输入您的学号"
                   required
                   solo
-                  @input="$v.student_id.$touch()"
-                  @blur="$v.student_id.$touch()"
+                  @input="$v.number.$touch()"
+                  @blur="$v.number.$touch()"
                 ></v-text-field>
               </v-col>
               <v-col md="3" offset-md="1" class="d-flex mt-3">
@@ -79,7 +79,7 @@ export default {
   validations: {
     name: { required, maxLength: maxLength(10) },
     gender: { required },
-    student_id: { required, maxLength: maxLength(10), minLength: minLength(10) }
+    number: { required, maxLength: maxLength(10), minLength: minLength(10) }
   },
   data: () => ({
     snackbar: false,
@@ -88,7 +88,7 @@ export default {
     valid: true,
     name: "",
     gender: null,
-    student_id: "",
+    number: "",
     genders: ["男", "女"]
   }),
   computed: {
@@ -107,10 +107,10 @@ export default {
     },
     idErrors() {
       const errors = [];
-      if (!this.$v.student_id.$dirty) return errors;
-      !this.$v.student_id.required && errors.push("学号不能为空");
-      !this.$v.student_id.maxLength && errors.push("学号不能超过10位");
-      !this.$v.student_id.minLength && errors.push("学号少于超过10位");
+      if (!this.$v.number.$dirty) return errors;
+      !this.$v.number.required && errors.push("学号不能为空");
+      !this.$v.number.maxLength && errors.push("学号不能超过10位");
+      !this.$v.number.minLength && errors.push("学号少于超过10位");
       return errors;
     }
   },
@@ -127,7 +127,7 @@ export default {
         .post("students/", {
           name: this.name,
           gender: this.gender,
-          student_id: this.student_id
+          number: this.number
         })
         .then(this.done());
     }
