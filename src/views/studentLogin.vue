@@ -99,7 +99,7 @@ export default {
     gender: null,
     number: "",
     genders: ["男", "女"],
-    left_eye: ""
+    left_eye: {}
   }),
   computed: {
     nameErrors() {
