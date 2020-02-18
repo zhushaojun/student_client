@@ -51,6 +51,15 @@
               </v-col>
             </v-row>
             <v-row row>
+              <v-file-input
+                v-model="left_eye"
+                accept="image/*"
+                show-size
+                label="File input"
+                prepend-icon="mdi-camera"
+              ></v-file-input>
+            </v-row>
+            <v-row row>
               <v-col md="1" offset-md="9">
                 <v-btn color="success lighten-1" @click="reset">重置</v-btn>
               </v-col>
@@ -89,7 +98,8 @@ export default {
     name: "",
     gender: null,
     number: "",
-    genders: ["男", "女"]
+    genders: ["男", "女"],
+    left_eye: ""
   }),
   computed: {
     nameErrors() {
@@ -123,13 +133,13 @@ export default {
       this.reset();
     },
     submit() {
-      this.axios
-        .post("students/", {
-          name: this.name,
-          gender: this.gender,
-          number: this.number
-        })
-        .then(this.done());
+      console.log(this.left_eye);
+      const form = new FormData();
+      form.append("name", this.name);
+      form.append("gender", this.gender);
+      form.append("number", this.number);
+      form.append("photo", this.left_eye);
+      this.axios.post("students/", form).then(this.done());
     }
   }
 };
