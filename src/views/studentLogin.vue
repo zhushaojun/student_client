@@ -58,6 +58,12 @@
                 label="File input"
                 prepend-icon="mdi-camera"
               ></v-file-input>
+              <v-img
+                :src="imgsrc"
+                height="125"
+                contain
+                class="grey darken-4"
+              ></v-img>
             </v-row>
             <v-row row>
               <v-col md="1" offset-md="9">
@@ -99,9 +105,16 @@ export default {
     gender: null,
     number: "",
     genders: ["男", "女"],
-    left_eye: ""
+    left_eye: {}
   }),
   computed: {
+    imgsrc() {
+      try {
+        return URL.createObjectURL(this.left_eye);
+      } catch (error) {
+        return "https://picsum.photos/350/165?random";
+      }
+    },
     nameErrors() {
       const errors = [];
       if (!this.$v.name.$dirty) return errors;
