@@ -21,9 +21,10 @@
           class="elevation-1"
         >
           <template v-slot:item.student_id="{ item }">
-            <v-btn label text @click="updateInfo(item)">{{
-              item.student_id
-            }}</v-btn>
+            <router-link
+              :to="{ name: 'studentinfo', params: { id: item.id } }"
+              >{{ item.student_id }}</router-link
+            >
           </template>
         </v-data-table>
       </v-card>
@@ -62,10 +63,6 @@ export default {
           // 请求失败处理
           console.log(error);
         });
-    },
-    updateInfo(item) {
-      const index = this.desserts.indexOf(item);
-      this.testdata = this.desserts[index];
     }
   }
 };
