@@ -5,12 +5,7 @@
         <v-card-title>
           学生信息列表
           <v-spacer></v-spacer>
-          <v-text-field
-            v-model="search"
-            label="Search"
-            single-line
-            hide-details
-          ></v-text-field>
+          <v-text-field v-model="search" label="Search" single-line hide-details></v-text-field>
         </v-card-title>
         <v-data-table
           :headers="headers"
@@ -21,9 +16,11 @@
           class="elevation-1"
         >
           <template v-slot:item.student_id="{ item }">
-            <v-btn label text @click="updateInfo(item)">{{
+            <v-btn label text @click="updateInfo(item)">
+              {{
               item.student_id
-            }}</v-btn>
+              }}
+            </v-btn>
           </template>
         </v-data-table>
       </v-card>
@@ -66,8 +63,6 @@ export default {
     updateInfo(item) {
       const index = this.desserts.indexOf(item);
       this.testdata = this.desserts[index];
-      this.$store.commit("updateInfo", this.testdata);
-      this.$router.replace({ path: "/studentinfo" });
     }
   }
 };

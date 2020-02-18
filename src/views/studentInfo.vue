@@ -4,7 +4,6 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
 export default {
   data: () => ({}),
   methods: {
@@ -18,8 +17,6 @@ export default {
         });
     }
   },
-  computed: {
-    ...mapState(["student_id"])
-  }
+  computed: {}
 };
 </script>
