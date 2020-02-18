@@ -53,7 +53,7 @@ export default {
     getData() {
       //axios从后台获取数据
       this.axios
-        .get("http://frp.oailab.cn:6101/api/students/")
+        .get("students/")
         .then(response => (this.desserts = response.data))
         .catch(function(error) {
           // 请求失败处理

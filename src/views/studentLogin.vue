@@ -3,12 +3,14 @@
     <v-container>
       <v-form ref="form" class="white">
         <v-card>
-          <v-card-text class="title black--text ">基本信息</v-card-text>
+          <v-card-text class="title black--text">基本信息</v-card-text>
           <v-card-text class="body-1 pb-0 pl-3 pr-3">
             <v-row row>
               <v-col md="3" class="d-flex mt-4 ml-4">
                 <div style="width:70px">
-                  <p class="mt-2"><span class="red--text">*</span>姓名</p>
+                  <p class="mt-2">
+                    <span class="red--text">*</span>姓名
+                  </p>
                 </div>
                 <v-text-field
                   v-model="name"
@@ -18,12 +20,13 @@
                   solo
                   @input="$v.name.$touch()"
                   @blur="$v.name.$touch()"
-                >
-                </v-text-field>
+                ></v-text-field>
               </v-col>
-              <v-col md="3" offset-md="1" class="d-flex mt-4 ">
+              <v-col md="3" offset-md="1" class="d-flex mt-4">
                 <div style="width:50px">
-                  <p class="mt-2"><span class="red--text">*</span>学号</p>
+                  <p class="mt-2">
+                    <span class="red--text">*</span>学号
+                  </p>
                 </div>
                 <v-text-field
                   v-model="student_id"
@@ -33,12 +36,13 @@
                   solo
                   @input="$v.student_id.$touch()"
                   @blur="$v.student_id.$touch()"
-                >
-                </v-text-field>
+                ></v-text-field>
               </v-col>
               <v-col md="3" offset-md="1" class="d-flex mt-3">
                 <div style="width:70px">
-                  <p class="mt-3"><span class="red--text">*</span>性别</p>
+                  <p class="mt-3">
+                    <span class="red--text">*</span>性别
+                  </p>
                 </div>
                 <v-select
                   v-model="gender"
@@ -49,8 +53,7 @@
                   solo
                   @change="$v.gender.$touch()"
                   @blur="$v.gender.$touch()"
-                >
-                </v-select>
+                ></v-select>
               </v-col>
             </v-row>
             <v-row row>
@@ -67,9 +70,7 @@
       <div class="text-center">
         <v-snackbar v-model="snackbar" :timeout="timeout">
           {{ text }}
-          <v-btn color="blue" text @click="done">
-            Close
-          </v-btn>
+          <v-btn color="blue" text @click="done">Close</v-btn>
         </v-snackbar>
       </div>
     </v-container>
@@ -129,7 +130,7 @@ export default {
     },
     submit() {
       this.axios
-        .post("http://frp.oailab.cn:6101/api/students/", {
+        .post("students/", {
           name: this.name,
           gender: this.gender,
           student_id: this.student_id
