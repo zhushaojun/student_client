@@ -8,9 +8,7 @@
             <v-row row>
               <v-col md="3" class="d-flex mt-4 ml-4">
                 <div style="width:70px">
-                  <p class="mt-2">
-                    <span class="red--text">*</span>姓名
-                  </p>
+                  <p class="mt-2"><span class="red--text">*</span>姓名</p>
                 </div>
                 <v-text-field
                   v-model="name"
@@ -24,9 +22,7 @@
               </v-col>
               <v-col md="3" offset-md="1" class="d-flex mt-4">
                 <div style="width:50px">
-                  <p class="mt-2">
-                    <span class="red--text">*</span>学号
-                  </p>
+                  <p class="mt-2"><span class="red--text">*</span>学号</p>
                 </div>
                 <v-text-field
                   v-model="student_id"
@@ -40,9 +36,7 @@
               </v-col>
               <v-col md="3" offset-md="1" class="d-flex mt-3">
                 <div style="width:70px">
-                  <p class="mt-3">
-                    <span class="red--text">*</span>性别
-                  </p>
+                  <p class="mt-3"><span class="red--text">*</span>性别</p>
                 </div>
                 <v-select
                   v-model="gender"

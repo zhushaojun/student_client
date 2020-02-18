@@ -13,19 +13,19 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: "/studentinfo/",
-      name: "studentinfo",
-      component: studentInfo
-    },
-    {
-      path: "/studentlist",
+      path: "/students",
       name: "studentlist",
       component: studentList
     },
     {
-      path: "/studentlogin",
+      path: "/students/add",
       name: "studentlogin",
       component: studentLogin
+    },
+    {
+      path: "/students/:id",
+      name: "studentinfo",
+      component: studentInfo
     }
   ]
 });
