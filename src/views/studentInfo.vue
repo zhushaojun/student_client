@@ -3,7 +3,7 @@
     <!-- <h2>个人信息页面</h2>
     <h2>当前状态: {{ student }}</h2> -->
 
-    <v-card class="mx-auto mt-12 ml-6 mr-6">
+    <v-card class="mx-auto mt-12 ml-6 mr-6" outlined style="border:0px">
       <v-list-item three-line>
         <v-list-item-content>
           <div class="overline mb-4">
@@ -19,13 +19,23 @@
             >学号：{{ student.number }}</v-list-item-title
           >
         </v-list-item-content>
-        <v-list-item-avatar tile size="80" color="grey"></v-list-item-avatar>
+        <v-list-item-avatar tile size="80" color="grey">
+          <!-- <v-img
+            class="elevation-6"
+            :src="student.photo"
+          ></v-img> -->
+        </v-list-item-avatar>
       </v-list-item>
+      <Grades></Grades>
     </v-card>
   </div>
 </template>
 <script>
+import Grades from "../components/Grades";
 export default {
+  components: {
+    Grades
+  },
   data: () => ({
     student: ""
   }),
