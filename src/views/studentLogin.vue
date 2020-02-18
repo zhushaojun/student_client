@@ -1,7 +1,7 @@
 <template>
   <div class="studentLogin">
     <v-container>
-      <v-form ref="form" class="white">
+      <v-form ref="formData" class="white">
         <v-card>
           <v-card-text class="title black--text">基本信息</v-card-text>
           <v-card-text class="body-1 pb-0 pl-3 pr-3">
@@ -139,20 +139,23 @@ export default {
   },
   methods: {
     reset() {
-      this.$refs.form.reset();
+      this.$refs.form.$reset();
     },
     done() {
       this.snackbar = true;
       this.reset();
     },
     submit() {
-      console.log(this.left_eye);
-      const form = new FormData();
-      form.append("name", this.name);
-      form.append("gender", this.gender);
-      form.append("number", this.number);
-      form.append("photo", this.left_eye);
-      this.axios.post("students/", form).then(this.done());
+      this.$v.$touch();
+      if (!this.$v.$invalid) {
+        console.log(this.left_eye);
+        const form = new FormData();
+        form.append("name", this.name);
+        form.append("gender", this.gender);
+        form.append("number", this.number);
+        form.append("photo", this.left_eye);
+        this.axios.post("students/", form).then(this.done());
+      }
     }
   }
 };
