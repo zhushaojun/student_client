@@ -4,7 +4,7 @@
       <v-form ref="form" class="white">
         <v-card>
           <v-card-text class="title black--text ">基本信息</v-card-text>
-           <v-card-text class="body-1 pb-0 pl-3 pr-3">
+          <v-card-text class="body-1 pb-0 pl-3 pr-3">
             <v-row row>
               <v-col md="3" class="d-flex mt-4 ml-4">
                 <div style="width:70px">
@@ -54,59 +54,47 @@
               </v-col>
             </v-row>
             <v-row row>
-            <v-col md="1" offset-md="9">
-               <v-btn  color="success lighten-1"  @click="reset">重置</v-btn>
-            </v-col>
-             <v-col md="1">
-               <v-btn  color="red lighten-1" @click="submit">注册</v-btn>
-            </v-col>
+              <v-col md="1" offset-md="9">
+                <v-btn color="success lighten-1" @click="reset">重置</v-btn>
+              </v-col>
+              <v-col md="1">
+                <v-btn color="red lighten-1" @click="submit">注册</v-btn>
+              </v-col>
             </v-row>
-           </v-card-text>
+          </v-card-text>
         </v-card>
       </v-form>
       <div class="text-center">
-    <v-snackbar
-      v-model="snackbar"
-      :timeout="timeout"
-    >
-      {{ text }}
-      <v-btn
-        color="blue"
-        text
-        @click="done"
-      >
-        Close
-      </v-btn>
-    </v-snackbar>
-  </div>
+        <v-snackbar v-model="snackbar" :timeout="timeout">
+          {{ text }}
+          <v-btn color="blue" text @click="done">
+            Close
+          </v-btn>
+        </v-snackbar>
+      </div>
     </v-container>
   </div>
 </template>
-<style>
-</style>
+<style></style>
 <script>
 import { validationMixin } from "vuelidate";
-import {
-  required,
-  maxLength,
-  minLength
-} from "vuelidate/lib/validators";
+import { required, maxLength, minLength } from "vuelidate/lib/validators";
 export default {
   mixins: [validationMixin],
   validations: {
     name: { required, maxLength: maxLength(10) },
     gender: { required },
-    student_id: { required, maxLength: maxLength(10), minLength: minLength(10) },
+    student_id: { required, maxLength: maxLength(10), minLength: minLength(10) }
   },
   data: () => ({
     snackbar: false,
-    text: '恭喜你，已经注册成功！',
+    text: "恭喜你，已经注册成功！",
     timeout: 3000,
     valid: true,
     name: "",
-    gender:null,
+    gender: null,
     student_id: "",
-    genders: ["男", "女"],
+    genders: ["男", "女"]
   }),
   computed: {
     nameErrors() {
@@ -129,22 +117,24 @@ export default {
       !this.$v.student_id.maxLength && errors.push("学号不能超过10位");
       !this.$v.student_id.minLength && errors.push("学号少于超过10位");
       return errors;
-    },
+    }
   },
-  methods:{
-    reset () {
-        this.$refs.form.reset()
-      },
-    done (){
-      this.snackbar=true
-      this.reset()
+  methods: {
+    reset() {
+      this.$refs.form.reset();
     },
-    submit(){
-      this.axios.post('http://frp.oailab.cn:6101/api/students/',{
-        "name":this.name,
-        "gender":this.gender,
-        "student_id":this.student_id
-      }).then(this.done())
+    done() {
+      this.snackbar = true;
+      this.reset();
+    },
+    submit() {
+      this.axios
+        .post("http://frp.oailab.cn:6101/api/students/", {
+          name: this.name,
+          gender: this.gender,
+          student_id: this.student_id
+        })
+        .then(this.done());
     }
   }
 };

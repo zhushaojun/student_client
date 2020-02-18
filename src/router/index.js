@@ -11,23 +11,23 @@ Vue.use(VueRouter);
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
-  routes:[
-  {
-    path: "/studentinfo/",
-    name: "studentinfo",
-    component: studentInfo
-  },
-  {
-    path: "/studentlist",
-    name: "studentlist",
-    component: studentList
-  },
-  {
-    path: "/studentlogin",
-    name: "studentlogin",
-    component: studentLogin
-  }
-]
+  routes: [
+    {
+      path: "/studentinfo/",
+      name: "studentinfo",
+      component: studentInfo
+    },
+    {
+      path: "/studentlist",
+      name: "studentlist",
+      component: studentList
+    },
+    {
+      path: "/studentlogin",
+      name: "studentlogin",
+      component: studentLogin
+    }
+  ]
 });
 
 export default router;
