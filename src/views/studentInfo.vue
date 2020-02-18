@@ -1,6 +1,6 @@
 <template>
   <div class="studentInfo">
-    <h2>当前状态: {{ student_id }}</h2>
+    <h2>个人信息页面</h2>
   </div>
 </template>
 <script>
