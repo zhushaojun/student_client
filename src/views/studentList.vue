@@ -19,6 +19,8 @@
           :sort-desc="[false, true]"
           multi-sort
           class="elevation-1"
+          loading
+          loading-text="数据加载中... 请稍候"
         >
           <template v-slot:item.number="{ item }">
             <router-link :to="{ name: 'studentinfo', params: { id: item.id } }">
@@ -57,12 +59,9 @@ export default {
     getData() {
       //axios从后台获取数据
       this.axios
-        .get("students/")
+        .get("students/?limit=65536&offset=0")
         .then(response => {
           this.students = response.data.results;
-          console.log(response.data.count);
-          console.log(response.data.next);
-          console.log(response.data.previous);
         })
         .catch(function(error) {
           // 请求失败处理
