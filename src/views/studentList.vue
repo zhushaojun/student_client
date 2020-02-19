@@ -14,7 +14,7 @@
         </v-card-title>
         <v-data-table
           :headers="headers"
-          :items="desserts"
+          :items="students"
           :search="search"
           :sort-desc="[false, true]"
           multi-sort
@@ -44,13 +44,13 @@ export default {
           sortable: false,
           value: "name"
         },
-        { text: "Gender", value: "gender" },
+        { text: "性别", value: "gender" },
         { text: "学号", value: "number" }
       ],
-      desserts: []
+      students: []
     };
   },
-  created() {
+  mounted() {
     this.getData();
   },
   methods: {
@@ -58,7 +58,12 @@ export default {
       //axios从后台获取数据
       this.axios
         .get("students/")
-        .then(response => (this.desserts = response.data))
+        .then(response => {
+          this.students = response.data.results;
+          console.log(response.data.count);
+          console.log(response.data.next);
+          console.log(response.data.previous);
+        })
         .catch(function(error) {
           // 请求失败处理
           console.log(error);

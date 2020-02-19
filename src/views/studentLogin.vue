@@ -52,10 +52,10 @@
             </v-row>
             <v-row row>
               <div class="col-md-3 offset-md-1">
-                <v-avatar tile color="blue" height="200px" width="200px">
+                <v-avatar tile height="200px" width="200px">
                   <v-img
                     :src="imgsrc"
-                    class="grey darken-4"
+                    class=" "
                     height="100%"
                     width="100%"
                   ></v-img>
@@ -123,7 +123,7 @@ export default {
       try {
         return URL.createObjectURL(this.left_eye);
       } catch (error) {
-        return "https://picsum.photos/350/165?random";
+        return require("../assets/person.svg");
       }
     },
     nameErrors() {
