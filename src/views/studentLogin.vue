@@ -57,6 +57,10 @@
                 show-size
                 label="File input"
                 prepend-icon="mdi-camera"
+                required
+                :error-messages="imageErrors"
+                @change="$v.left_eye.$touch()"
+                @blur="$v.left_eye.$touch()"
               ></v-file-input>
               <v-img
                 :src="imgsrc"
@@ -94,7 +98,8 @@ export default {
   validations: {
     name: { required, maxLength: maxLength(10) },
     gender: { required },
-    number: { required, maxLength: maxLength(10), minLength: minLength(10) }
+    number: { required, maxLength: maxLength(10), minLength: minLength(10) },
+    left_eye: { required }
   },
   data: () => ({
     snackbar: false,
@@ -135,11 +140,17 @@ export default {
       !this.$v.number.maxLength && errors.push("学号不能超过10位");
       !this.$v.number.minLength && errors.push("学号少于超过10位");
       return errors;
+    },
+    imageErrors() {
+      const errors = [];
+      if (!this.$v.number.$dirty) return errors;
+      !this.$v.number.required && errors.push("图片不能为空");
+      return errors;
     }
   },
   methods: {
     reset() {
-      this.$refs.form.$reset();
+      this.$refs.formData.reset();
     },
     done() {
       this.snackbar = true;
