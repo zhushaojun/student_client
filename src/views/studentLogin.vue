@@ -51,23 +51,29 @@
               </v-col>
             </v-row>
             <v-row row>
-              <v-file-input
-                v-model="left_eye"
-                accept="image/*"
-                show-size
-                label="File input"
-                prepend-icon="mdi-camera"
-                required
-                :error-messages="imageErrors"
-                @change="$v.left_eye.$touch()"
-                @blur="$v.left_eye.$touch()"
-              ></v-file-input>
-              <v-img
-                :src="imgsrc"
-                height="125"
-                contain
-                class="grey darken-4"
-              ></v-img>
+              <div class="col-md-3 offset-md-1">
+                <v-avatar tile color="blue" height="200px" width="200px">
+                  <v-img
+                    :src="imgsrc"
+                    class="grey darken-4"
+                    height="100%"
+                    width="100%"
+                  ></v-img>
+                </v-avatar>
+              </div>
+              <div class="col-md-4">
+                <v-file-input
+                  v-model="left_eye"
+                  accept="image/*"
+                  show-size
+                  label="File input"
+                  prepend-icon="mdi-camera"
+                  required
+                  :error-messages="imageErrors"
+                  @change="$v.left_eye.$touch()"
+                  @blur="$v.left_eye.$touch()"
+                ></v-file-input>
+              </div>
             </v-row>
             <v-row row>
               <v-col md="1" offset-md="9">
