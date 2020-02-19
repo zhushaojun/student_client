@@ -21,10 +21,9 @@
           class="elevation-1"
         >
           <template v-slot:item.number="{ item }">
-            <router-link
-              :to="{ name: 'studentinfo', params: { id: item.id } }"
-              >{{ item.number }}</router-link
-            >
+            <router-link :to="{ name: 'studentinfo', params: { id: item.id } }">
+              {{ item.number }}
+            </router-link>
           </template>
         </v-data-table>
       </v-card>
