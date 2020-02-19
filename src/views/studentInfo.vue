@@ -1,7 +1,5 @@
 <template>
   <div class="studentInfo">
-    <!-- <h2>个人信息页面</h2>
-    <h2>当前状态: {{ student }}</h2>-->
 
     <v-card class="mx-auto mt-12 ml-6 mr-6" outlined style="border:0px">
       <v-list-item three-line>
@@ -20,7 +18,7 @@
           ></v-img>-->
         </v-list-item-avatar>
       </v-list-item>
-      <Grades></Grades>
+      <Grades v-bind:userInfo="this.student.courses"></Grades>
     </v-card>
   </div>
 </template>
@@ -40,6 +38,7 @@ export default {
       .get(`students/${this.$route.params.id}/`)
       .then(response => {
         this.student = response.data;
+        // console.log(this.student.courses)
       })
       .catch(function(error) {
         // 请求失败处理
