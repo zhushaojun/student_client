@@ -11,9 +11,9 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item,i) in userInfo" :key="i">
-              <td>{{i}}</td>
+            <tr v-for="(item,index) in userInfo" :key="index">
               <td>{{item}}</td>
+              <td>{{index}}</td>
               <td>
                 <v-btn color="primary" fab x-small dark>
                   <v-icon @click="editItem(item)">mdi-pencil</v-icon>
@@ -86,13 +86,24 @@ export default {
     }
   },
   created() {
+    this.initialize();
   },
 
   methods: {
-
+    initialize() {
+      this.desserts = [
+        {
+          courseName: "Frozen Yogurt",
+          courseGrade: 159
+        }
+      ];
+      console.log(typeof this.desserts);
+    },
     editItem(item) {
-      this.editedIndex = this.desserts.indexOf(item);
-      this.editedItem = Object.assign({}, item);
+      this.desserts= Object.assign({}, this.userInfo);
+      console.log(typeof this.userInfo);
+      this.editedIndex = this.desserts.indexOf(item); //返回item在desserts中首次出现的位置
+      this.editedItem = Object.assign({}, item); //item的值复制到editedItem中
       this.dialog = true;
     },
 
