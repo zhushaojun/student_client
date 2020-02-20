@@ -4,20 +4,22 @@
     <h2>当前状态: {{ student }}</h2>-->
 
     <v-card class="mx-auto mt-12 ml-6 mr-6" outlined style="border:0px">
+      <v-btn @click="submit">提交修改</v-btn>
       <v-list-item three-line>
         <v-list-item-content>
           <div class="overline mb-4">
             <span class="title font-weight-light">学生个人信息</span>
           </div>
-          <v-list-item-title class="mb-1 mb-4"
-            >姓名：{{ student.name }}</v-list-item-title
-          >
-          <v-list-item-title class="mb-1 mb-4"
-            >性别：{{ student.gender }}</v-list-item-title
-          >
-          <v-list-item-title class="mb-1 mb-4"
-            >学号：{{ student.number }}</v-list-item-title
-          >
+          <v-list-item-title class="mb-1 mb-4">
+            姓名：{{ student.name }}
+          </v-list-item-title>
+          <v-text-field v-model="student.name" label="name"></v-text-field>
+          <v-list-item-title class="mb-1 mb-4">
+            性别：{{ student.gender }}
+          </v-list-item-title>
+          <v-list-item-title class="mb-1 mb-4">
+            学号：{{ student.number }}
+          </v-list-item-title>
         </v-list-item-content>
         <v-list-item-avatar tile size="80" color="grey">
           <!-- <v-img
@@ -39,7 +41,15 @@ export default {
   data: () => ({
     student: ""
   }),
-  methods: {},
+  methods: {
+    submit() {
+      this.axios
+        .patch(`students/${this.$route.params.id}/`, {
+          name: this.student.name
+        })
+        .then();
+    }
+  },
   mounted() {
     // console.log(`students/${this.$route.params.id}/`); //反引号里面是模板字符串
     this.axios
