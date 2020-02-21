@@ -19,7 +19,7 @@
           :sort-desc="[false, true]"
           multi-sort
           class="elevation-1"
-          loading
+          :loading="this.loadFlag"
           loading-text="数据加载中... 请稍候"
           :items-per-page.sync="itemsPerPage"
           :page.sync="page"
@@ -57,6 +57,12 @@ export default {
       page: 1,
       itemsPerPage: 5
     };
+  },
+  computed: {
+    loadFlag: function() {
+      if (this.students.length > 0) return false;
+      else return true;
+    }
   },
   mounted() {
     this.getData();
