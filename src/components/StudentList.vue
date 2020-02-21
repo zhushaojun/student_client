@@ -67,7 +67,6 @@ export default {
   mounted() {
     this.getData();
   },
-  computed: {},
   watch: {
     page() {
       this.getData();

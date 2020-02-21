@@ -100,6 +100,7 @@
 import { validationMixin } from "vuelidate";
 import { required, maxLength, minLength } from "vuelidate/lib/validators";
 export default {
+  name: "Register",
   mixins: [validationMixin],
   validations: {
     name: { required, maxLength: maxLength(10) },
