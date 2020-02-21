@@ -1,9 +1,9 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import studentInfo from "../views/studentInfo.vue";
-import studentList from "../views/studentList.vue";
-import studentLogin from "../views/studentLogin.vue";
-import loginPage from "../views/loginPage.vue";
+import StudentEdit from "@/components/StudentEdit.vue";
+import StudentList from "@/components/StudentList.vue";
+import StudentAdd from "@/components/StudentAdd.vue";
+import Login from "@/components/auth/Login.vue";
 // import Home from "../views/Home.vue";
 
 Vue.use(VueRouter);
@@ -15,25 +15,25 @@ const router = new VueRouter({
     {
       path: "/",
       name: "login",
-      component: loginPage,
+      component: Login,
       meta: { keepAlive: false }
     },
     {
       path: "/student/add",
       name: "studentadd",
-      component: studentLogin,
+      component: StudentAdd,
       meta: { keepAlive: true }
     },
     {
       path: "/student/:id",
       name: "studentinfo",
-      component: studentInfo,
+      component: StudentEdit,
       meta: { keepAlive: true }
     },
     {
       path: "/students",
       name: "studentlist",
-      component: studentList,
+      component: StudentList,
       meta: { keepAlive: true }
     }
   ]

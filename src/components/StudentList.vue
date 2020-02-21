@@ -21,6 +21,9 @@
           class="elevation-1"
           :loading="this.loadFlag"
           loading-text="数据加载中... 请稍候"
+          :items-per-page.sync="itemsPerPage"
+          :page.sync="page"
+          :server-items-length="length"
         >
           <template v-slot:item.number="{ item }">
             <router-link :to="{ name: 'studentinfo', params: { id: item.id } }">
@@ -49,7 +52,10 @@ export default {
         { text: "性别", value: "gender" },
         { text: "学号", value: "number" }
       ],
-      students: []
+      students: [],
+      length: 0,
+      page: 1,
+      itemsPerPage: 5
     };
   },
   computed: {
@@ -61,13 +67,23 @@ export default {
   mounted() {
     this.getData();
   },
+  watch: {
+    page() {
+      this.getData();
+    },
+    itemsPerPage() {
+      this.getData();
+    }
+  },
   methods: {
     getData() {
       //axios从后台获取数据
+      let offset = this.itemsPerPage * (this.page - 1);
       this.axios
-        .get("students/?limit=65536&offset=0")
+        .get(`students/?limit=${this.itemsPerPage}&offset=${offset}`)
         .then(response => {
           this.students = response.data.results;
+          this.length = response.data.count;
         })
         .catch(function(error) {
           // 请求失败处理
