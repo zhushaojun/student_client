@@ -2,6 +2,7 @@
   "name": "student_client",
   "version": "0.1.0",
   "private": true,
+  "homepage":"https://zhushaojun.github.io/student_client",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
