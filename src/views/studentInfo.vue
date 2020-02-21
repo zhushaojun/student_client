@@ -32,6 +32,7 @@
           <template v-slot:default>
             <thead>
               <tr>
+                <th class="text-left">序号</th>
                 <th class="text-left">课程</th>
                 <th class="text-left">成绩</th>
               </tr>
@@ -39,12 +40,13 @@
             <tbody>
               <tr v-for="(item,index) in student.courses" :key="index">
                 <td>
-                  {{index}}
-                  <!-- <v-text-field  :value="index" style="width:30%" dense></v-text-field> -->
+                  {{index+1}}
                 </td>
                 <td>
-                  <!-- {{item}} -->
-                  <v-text-field :disabled="!disabled" v-model="student.courses[index]" style="width:30%" dense></v-text-field>
+                  <v-text-field :disabled="!disabled" v-model="item.课程" style="width:30%" dense></v-text-field>
+                </td>
+                <td>
+                  <v-text-field :disabled="!disabled" v-model="item.分数" style="width:30%" dense></v-text-field>
                 </td>
               </tr>
             </tbody>
@@ -88,6 +90,7 @@ export default {
         // 请求失败处理
         console.log(error);
       });
+   
   },
   computed: {}
 };
