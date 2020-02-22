@@ -51,7 +51,7 @@ export default {
   methods: {
     show() {
       this.axios
-        .post("http://frp.oailab.cn:6101/auth/token/", {
+        .post("auth/token/", {
           username: this.username,
           password: this.password
         })
