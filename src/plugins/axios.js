@@ -10,7 +10,7 @@ import axios from "axios";
 
 let config = {
   // baseURL: process.env.baseURL || process.env.apiUrl || ""
-  baseURL: "https://frp.oailab.cn:6101/api",
+  baseURL: "http://frp.oailab.cn:6101/api",
   timeout: 60 * 1000, // Timeout
   withCredentials: true // Check cross-site Access-Control
 };
