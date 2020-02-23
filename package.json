@@ -2,7 +2,7 @@
   "name": "student_client",
   "version": "0.1.0",
   "private": true,
-  "homepage":"https://zhushaojun.github.io/student_client/",
+  "homepage": "https://zhushaojun.github.io/student_client/",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -15,7 +15,7 @@
     "vue": "^2.6.11",
     "vue-router": "^3.1.5",
     "vuelidate": "^0.7.5",
-    "vuetify": "^2.2.11"
+    "vuetify": "^2.2.14"
   },
   "devDependencies": {
     "@mdi/font": "^4.9.95",
@@ -29,7 +29,7 @@
     "babel-eslint": "^10.0.3",
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.1.1",
-    "eslint-plugin-vue": "^6.1.2",
+    "eslint-plugin-vue": "^6.2.1",
     "prettier": "^1.19.1",
     "sass": "^1.19.0",
     "sass-loader": "^8.0.0",
