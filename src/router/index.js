@@ -4,6 +4,7 @@ import StudentEdit from "@/components/StudentEdit.vue";
 import StudentList from "@/components/StudentList.vue";
 import StudentAdd from "@/components/StudentAdd.vue";
 import Login from "@/components/auth/Login.vue";
+import Mathjax from "@/views/Mathjax.vue";
 // import Home from "../views/Home.vue";
 
 Vue.use(VueRouter);
@@ -12,6 +13,11 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes: [
+    {
+      path: "/math",
+      name: "math",
+      component: Mathjax
+    },
     {
       path: "/",
       name: "login",
