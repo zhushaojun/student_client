@@ -12,7 +12,8 @@ let config = {
   // baseURL: process.env.baseURL || process.env.apiUrl || ""
   baseURL: "http://frp.oailab.cn:6101/api",
   timeout: 60 * 1000, // Timeout
-  withCredentials: true // Check cross-site Access-Control
+  withCredentials: true, // Check cross-site Access-Control
+  headers: { "Content-Type": "application/json" }
 };
 
 const _axios = axios.create(config);
