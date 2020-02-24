@@ -57,6 +57,7 @@ export default {
         })
         .then(response => {
           if (response.status === 200) {
+            localStorage.setItem("Token", response.data.auth_token);
             this.$router.push({ path: "/students" });
           }
         });
