@@ -37,7 +37,6 @@ export default {
   data() {
     return {
       search: "",
-      testdata: "",
       headers: [
         { text: "序号", value: "id" },
         {
