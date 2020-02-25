@@ -29,12 +29,18 @@
     <v-app-bar app color="teal lighten-1" dark>
       <v-spacer></v-spacer>
       <!-- userinfo区域 -->
-      <v-avatar>
-        <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
-      </v-avatar>
+      <router-link :to="{ name: 'useredit' }">
+        <v-avatar>
+          <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
+        </v-avatar>
+      </router-link>
+
       <div class="ml-2 mr-10 black--text">
         <p class="mt-3 mb-0">{{ userName }}</p>
         <p>{{ userStatus }}</p>
+      </div>
+      <div class="div">
+        <v-btn class="btn btn-info" @click="logout">退出</v-btn>
       </div>
       <!-- userinfo区域end -->
     </v-app-bar>
@@ -56,6 +62,14 @@ export default {
       },
       { title: "学生注册", icon: "mdi-pencil", route: { name: "studentadd" } }
     ]
-  })
+  }),
+  methods: {
+    logout() {
+      this.$store
+        .dispatch("logout")
+        .then(() => this.$router.push("/login"))
+        .catch(err => console.log(err));
+    }
+  }
 };
 </script>

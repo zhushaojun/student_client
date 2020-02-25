@@ -4,7 +4,11 @@ import StudentEdit from "@/components/StudentEdit.vue";
 import StudentList from "@/components/StudentList.vue";
 import StudentAdd from "@/components/StudentAdd.vue";
 import Login from "@/components/auth/Login.vue";
+import Register from "@/components/auth/Register.vue";
+import Mathjax from "@/views/Mathjax.vue";
+import Useredit from "@/components/Useredit.vue";
 // import Home from "../views/Home.vue";
+import store from "@/store/index";
 
 Vue.use(VueRouter);
 
@@ -13,30 +17,58 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: "/",
+      path: "/math",
+      name: "math",
+      component: Mathjax
+    },
+    {
+      path: "/login",
       name: "login",
       component: Login,
       meta: { keepAlive: false }
     },
     {
+      path: "/register",
+      name: "register",
+      component: Register
+    },
+    {
       path: "/student/add",
       name: "studentadd",
       component: StudentAdd,
-      meta: { keepAlive: true }
+      meta: { keepAlive: true, requiresAuth: true }
     },
     {
       path: "/student/:id",
       name: "studentinfo",
       component: StudentEdit,
-      meta: { keepAlive: true }
+      meta: { keepAlive: true, requiresAuth: true }
     },
     {
-      path: "/students",
+      path: "/",
       name: "studentlist",
       component: StudentList,
-      meta: { keepAlive: true }
+      meta: { keepAlive: true, requiresAuth: true }
+    },
+    {
+      path: "/user/edit",
+      name: "useredit",
+      component: Useredit,
+      meta: { keepAlive: true, requiresAuth: true }
     }
   ]
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (store.getters.isLoggedIn) {
+      next();
+      return;
+    }
+    next("/login");
+  } else {
+    next();
+  }
 });
 
 export default router;
