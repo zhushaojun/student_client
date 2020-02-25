@@ -44,13 +44,13 @@ const router = new VueRouter({
       path: "/student/add",
       name: "studentadd",
       component: StudentAdd,
-      meta: { keepAlive: true }
+      meta: { keepAlive: true, requiresAuth: true }
     },
     {
       path: "/student/:id",
       name: "studentinfo",
       component: StudentEdit,
-      meta: { keepAlive: true }
+      meta: { keepAlive: true, requiresAuth: true }
     },
     {
       path: "/",
