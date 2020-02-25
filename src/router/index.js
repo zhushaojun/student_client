@@ -6,6 +6,7 @@ import StudentAdd from "@/components/StudentAdd.vue";
 import Login from "@/components/auth/Login.vue";
 import Register from "@/components/auth/Register.vue";
 import Mathjax from "@/views/Mathjax.vue";
+import Useredit from "@/components/Useredit.vue";
 // import Home from "../views/Home.vue";
 import Secure from "@/components/Secure.vue";
 import store from "@/store/index";
@@ -56,6 +57,12 @@ const router = new VueRouter({
       path: "/",
       name: "studentlist",
       component: StudentList,
+      meta: { keepAlive: true, requiresAuth: true }
+    },
+    {
+      path: "/user/edit",
+      name: "useredit",
+      component: Useredit,
       meta: { keepAlive: true, requiresAuth: true }
     }
   ]

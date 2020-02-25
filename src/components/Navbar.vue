@@ -29,9 +29,12 @@
     <v-app-bar app color="teal lighten-1" dark>
       <v-spacer></v-spacer>
       <!-- userinfo区域 -->
-      <v-avatar>
-        <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
-      </v-avatar>
+      <router-link :to="{ name: 'useredit' }">
+        <v-avatar>
+          <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
+        </v-avatar>
+      </router-link>
+
       <div class="ml-2 mr-10 black--text">
         <p class="mt-3 mb-0">{{ userName }}</p>
         <p>{{ userStatus }}</p>
