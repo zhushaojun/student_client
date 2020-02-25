@@ -44,7 +44,7 @@ const router = new VueRouter({
       path: "/student/add",
       name: "studentadd",
       component: StudentAdd,
-      meta: { keepAlive: true, requiresAuth: true }
+      meta: { keepAlive: true }
     },
     {
       path: "/student/:id",
@@ -56,7 +56,7 @@ const router = new VueRouter({
       path: "/",
       name: "studentlist",
       component: StudentList,
-      meta: { keepAlive: true }
+      meta: { keepAlive: true, requiresAuth: true }
     }
   ]
 });
