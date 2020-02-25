@@ -8,7 +8,6 @@ import Register from "@/components/auth/Register.vue";
 import Mathjax from "@/views/Mathjax.vue";
 import Useredit from "@/components/Useredit.vue";
 // import Home from "../views/Home.vue";
-import Secure from "@/components/Secure.vue";
 import store from "@/store/index";
 
 Vue.use(VueRouter);
@@ -17,14 +16,6 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes: [
-    {
-      path: "/secure",
-      name: "secure",
-      component: Secure,
-      meta: {
-        requiresAuth: true
-      }
-    },
     {
       path: "/math",
       name: "math",
