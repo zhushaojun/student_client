@@ -31,7 +31,7 @@
             <v-card-actions>
               <v-btn @click="register" color="primary">Register</v-btn>
               <v-spacer></v-spacer>
-              <v-btn @click="show" color="primary">Login</v-btn>
+              <v-btn @click="login" color="primary">Login</v-btn>
             </v-card-actions>
           </v-card>
         </v-col>
@@ -49,21 +49,16 @@ export default {
     };
   },
   methods: {
-    show() {
-      this.axios
-        .post("http://frp.oailab.cn:6101/auth/token/login/", {
-          username: this.username,
-          password: this.password
-        })
-        .then(response => {
-          if (response.status === 200) {
-            localStorage.setItem("Token", response.data.auth_token);
-            this.$router.push({ path: "/students" });
-          }
-        });
+    login() {
+      let username = this.username;
+      let password = this.password;
+      this.$store
+        .dispatch("login", { username, password })
+        .then(() => this.$router.push("/"))
+        .catch(err => console.log(err));
     },
     register() {
-      console.log("11");
+      this.$router.push("/register");
     }
   }
 };

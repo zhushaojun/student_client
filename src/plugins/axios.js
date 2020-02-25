@@ -2,16 +2,20 @@
 
 import Vue from "vue";
 import axios from "axios";
-
+// import store from "../store/index";
 // Full config:  https://github.com/axios/axios#request-config
 // axios.defaults.baseURL = process.env.baseURL || process.env.apiUrl || '';
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 axios.defaults.baseURL = "http://frp.oailab.cn:6101/api";
-axios.defaults.headers.common["Authorization"] = localStorage.getItem("Token");
+// axios.defaults.headers.common["Authorization"] = localStorage.getItem("Token");
 axios.defaults.headers.common["Content-Type"] = "application/json";
 
+const token = localStorage.getItem("token");
+if (token) {
+  axios.defaults.headers.common["Authorization"] = token;
+}
 
 let config = {
   // baseURL: process.env.baseURL || process.env.apiUrl || ""
