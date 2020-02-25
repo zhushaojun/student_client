@@ -37,11 +37,11 @@ export default new Vuex.Store({
           method: "POST"
         })
           .then(resp => {
-            console.log(resp);
             const token = resp.data.auth_token;
             const username = user.username;
+            localStorage.setItem("username", username);
             localStorage.setItem("token", token);
-            axios.defaults.headers.common["Authorization"] = token;
+            axios.defaults.headers.common["Authorization"] = "Token " + token;
             commit("auth_success", token, username);
             resolve(resp);
           })

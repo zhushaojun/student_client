@@ -14,7 +14,7 @@ axios.defaults.headers.common["Content-Type"] = "application/json";
 
 const token = localStorage.getItem("token");
 if (token) {
-  axios.defaults.headers.common["Authorization"] = token;
+  axios.defaults.headers.common["Authorization"] = "Token " + token;
 }
 
 let config = {
