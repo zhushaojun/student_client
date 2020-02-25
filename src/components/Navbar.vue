@@ -36,6 +36,9 @@
         <p class="mt-3 mb-0">{{ userName }}</p>
         <p>{{ userStatus }}</p>
       </div>
+      <div class="div">
+        <v-btn class="btn btn-info" @click="logout">退出</v-btn>
+      </div>
       <!-- userinfo区域end -->
     </v-app-bar>
   </nav>
@@ -56,6 +59,14 @@ export default {
       },
       { title: "学生注册", icon: "mdi-pencil", route: { name: "studentadd" } }
     ]
-  })
+  }),
+  methods: {
+    logout() {
+      this.$store
+        .dispatch("logout")
+        .then(() => this.$router.push("/login"))
+        .catch(err => console.log(err));
+    }
+  }
 };
 </script>
