@@ -10,11 +10,7 @@
                 <div style="width:70px">
                   <p class="mt-2"><span class="red--text">*</span>邮箱</p>
                 </div>
-                <v-text-field
-                  :readonly="changeFlag"
-                  v-model="email"
-                  solo
-                ></v-text-field>
+                <v-text-field v-model="email" solo></v-text-field>
               </v-col>
             </v-row>
           </v-card-text>
@@ -31,17 +27,15 @@
 </template>
 <script>
 export default {
-  data: () => ({
-    email: "xxxx@email.com",
-    changeFlag: true
-  }),
+  data() {
+    return {
+      email: ""
+    };
+  },
   mounted() {
     this.getUserData();
   },
   methods: {
-    test() {
-      this.changeFlag = false;
-    },
     submit() {
       this.axios
         .patch("http://frp.oailab.cn:6101/auth/users/me/", {
@@ -58,7 +52,6 @@ export default {
     getUserData() {
       this.axios.get("http://frp.oailab.cn:6101/auth/users/me/").then(res => {
         this.email = res.data.email;
-        // console.log(res);
       });
     }
   }
