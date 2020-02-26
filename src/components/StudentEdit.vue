@@ -4,26 +4,18 @@
       <v-list-item three-line>
         <v-list-item-content>
           <div class="overline mb-4">
-            <span class="title font-weight-light">学生信息</span>
+            <span class="title font-weight-light">学生个人信息</span>
           </div>
-          <v-list-item-title class="mb-1 mb-4"
-            >姓名：{{ student.name }}</v-list-item-title
-          >
-          <v-list-item-title class="mb-1 mb-4"
-            >性别：{{ student.gender }}</v-list-item-title
-          >
-          <v-list-item-title class="mb-1 mb-4"
-            >学号：{{ student.number }}</v-list-item-title
-          >
+          <v-list-item-title class="mb-1 mb-4">姓名：{{ student.name }}</v-list-item-title>
+          <v-list-item-title class="mb-1 mb-4">性别：{{ student.gender }}</v-list-item-title>
+          <v-list-item-title class="mb-1 mb-4">学号：{{ student.number }}</v-list-item-title>
         </v-list-item-content>
-        <!-- <v-list-item-avatar tile size="80" color="grey">
+        <v-list-item-avatar tile size="80" color="grey">
           <v-img class="elevation-6" :src="student.photo"></v-img>
-        </v-list-item-avatar> -->
+        </v-list-item-avatar>
       </v-list-item>
 
-      <!-- <Grades v-bind:userInfo="this.student.courses"></Grades> -->
-
-      <v-card max-width="700" height="600">
+      <v-card class="mt-2 mb-2" min-height="380">
         <v-tabs background-color="indigo" dark>
           <v-tab v-for="(card, index) in cards" :key="index">{{ card }}</v-tab>
           <!--access-->
@@ -40,13 +32,9 @@
                   课程成绩
                   <v-divider class="mx-4" inset vertical></v-divider>
                   <v-spacer></v-spacer>
-                  <v-switch
-                    v-model="disabled"
-                    class="ma-2"
-                    label="修改"
-                  ></v-switch>
+                  <v-switch v-model="disabled" class="ma-2" label="修改"></v-switch>
                 </v-card-title>
-                <v-simple-table class="ml-10 mr-10">
+                <v-simple-table class="ml-5 mr-5">
                   <template v-slot:default>
                     <thead>
                       <tr>
@@ -56,8 +44,8 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="(item, index) in student.courses" :key="index">
-                        <td>{{ index + 1 }}</td>
+                      <tr v-for="(item,index) in student.courses.inputs" :key="index">
+                        <td>{{index+1}}</td>
                         <td>
                           <v-text-field
                             :disabled="!disabled"
@@ -79,12 +67,16 @@
                   </template>
                 </v-simple-table>
               </v-card-text>
+              <v-btn color="primary" position: absolute right dark class="mb-12 mt-10" @click="submit">确定</v-btn>
             </v-card>
           </v-tab-item>
           <!--computes-->
           <v-tab-item>
             <v-card flat>
-              <v-card-text></v-card-text>
+              <v-card-text>
+                <!-- <textarea v-model="formula" cols="30" rows="10"></textarea>
+                <Mathjax :formula="formula"></Mathjax>-->
+              </v-card-text>
             </v-card>
           </v-tab-item>
         </v-tabs>
@@ -93,15 +85,16 @@
   </div>
 </template>
 <script>
-// import Grades from "../components/Grades";
+// import { Mathjax } from "../views/Mathjax";
 export default {
   components: {
-    // Grades
+    // Mathjax: Mathjax
   },
   data: () => ({
     student: "",
     disabled: false,
     cards: ["access", "inputs", "computes"]
+    // formula: "$$x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.$$"
   }),
   methods: {
     submit() {
@@ -120,7 +113,7 @@ export default {
       .get(`students/${this.$route.params.id}/`)
       .then(response => {
         this.student = response.data;
-        console.log(this.student);
+        console.log(this.courses);
       })
       .catch(function(error) {
         // 请求失败处理
