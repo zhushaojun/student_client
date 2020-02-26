@@ -6,7 +6,11 @@
     </v-content>
   </v-app>
 </template>
-
+<style>
+body {
+  background-color: #f5f5f5;
+}
+</style>
 <script>
 import Navbar from "./components/Navbar";
 

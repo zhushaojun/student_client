@@ -157,11 +157,14 @@ export default {
   },
   methods: {
     reset() {
-      this.$refs.formData.reset();
+      this.$v.$reset();
+      this.name = "";
+      this.gendr = null;
+      this.number = "";
+      this.left_eye = "";
     },
     done() {
       this.snackbar = true;
-      this.reset();
     },
     submit() {
       this.$v.$touch();

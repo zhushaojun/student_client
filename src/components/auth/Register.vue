@@ -1,49 +1,107 @@
 <template>
-  <div>
-    <h4>Register</h4>
-    <form @submit.prevent="register">
-      <label for="username">Username</label>
-      <div>
-        <input
-          id="username"
-          type="text"
-          v-model="username"
-          required
-          autofocus
-        />
-      </div>
-
-      <label for="email">E-Mail Address</label>
-      <div>
-        <input id="email" type="email" v-model="email" required />
-      </div>
-
-      <label for="password">Password</label>
-      <div>
-        <input id="password" type="password" v-model="password" required />
-      </div>
-
-      <label for="password-confirm">Confirm Password</label>
-      <div>
-        <input
-          id="password-confirm"
-          type="password"
-          v-model="password_confirmation"
-          required
-        />
-      </div>
-
-      <div>
-        <button type="submit">Register</button>
-      </div>
-    </form>
+  <div class="register">
+    <v-row>
+      <v-col md="6" sm="6" offset-md="2">
+        <v-card-text class="test">
+          <v-form ref="form" v-model="valid" lazy-validation>
+            <v-row>
+              <v-col md="10" offset-md="1">
+                <v-text-field
+                  v-model="username"
+                  :error-messages="usernameErrors"
+                  label="Username"
+                  required
+                  @input="$v.username.$touch()"
+                  @blur="$v.username.$touch()"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col md="10" offset-md="1">
+                <v-text-field
+                  v-model="email"
+                  :error-messages="emailErrors"
+                  label="xxx@example.com"
+                  required
+                  type="email"
+                  @input="$v.email.$touch()"
+                  @blur="$v.email.$touch()"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col md="10" offset-md="1">
+                <v-text-field
+                  v-model="password"
+                  :error-messages="passwordErrors"
+                  label="password"
+                  required
+                  type="password"
+                  @input="$v.password.$touch()"
+                  @blur="$v.password.$touch()"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col md="10" offset-md="1">
+                <v-text-field
+                  v-model="password_confirmation"
+                  :error-messages="passwordConfirmErrors"
+                  label="password_confirm"
+                  required
+                  type="password"
+                  @input="$v.password_confirmation.$touch()"
+                  @blur="$v.password_confirmation.$touch()"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+            <v-row justify="space-around">
+              <v-btn color="primary" @click="reset">Reset</v-btn>
+              <v-btn color="success" @click="register">Register</v-btn>
+            </v-row>
+          </v-form>
+        </v-card-text>
+        <div class="text-center">
+          <v-snackbar v-model="snackbar" :timeout="timeout">
+            {{ tips }}
+            <v-btn color="blue" text @click="done">Close</v-btn>
+          </v-snackbar>
+        </div>
+      </v-col>
+    </v-row>
   </div>
 </template>
-
+<style>
+.test {
+  border: 1px solid #eee;
+  border-radius: 3px;
+  box-shadow: 2px;
+}
+</style>
 <script>
+import { validationMixin } from "vuelidate";
+import {
+  required,
+  maxLength,
+  minLength,
+  email
+} from "vuelidate/lib/validators";
 export default {
+  name: "Register",
+  mixins: [validationMixin],
+  validations: {
+    username: { required, maxLength: maxLength(10) },
+    email: { required, email },
+    password: { required, minLength: minLength(8) },
+    password_confirmation: { required, minLength: minLength(8) }
+  },
+
   data() {
     return {
+      valid: true,
+      snackbar: false,
+      timeout: 3000,
+      tips: "",
       username: "",
       email: "",
       password: "",
@@ -57,10 +115,63 @@ export default {
         email: this.email,
         password: this.password
       };
-      this.$store
-        .dispatch("register", data)
-        .then(() => this.$router.push("/login"))
-        .catch(err => console.log(err));
+      if (!this.$v.$invalid) {
+        if (this.password === this.password_confirmation) {
+          this.$store
+            .dispatch("register", data)
+            .then(() => this.$router.push("/login"))
+            .catch(err => console.log(err));
+        } else {
+          this.tipsbar("两次密码不一致，请检查");
+        }
+      } else {
+        this.tipsbar("信息不完善,请检查");
+      }
+    },
+    reset() {
+      this.$v.$reset();
+      this.username = "";
+      this.email = "";
+      this.password_confirmation = "";
+      this.password = "";
+    },
+    tipsbar(text) {
+      this.snackbar = true;
+      this.tips = text;
+    },
+    done() {
+      this.snackbar = true;
+    }
+  },
+  computed: {
+    usernameErrors() {
+      const errors = [];
+      if (!this.$v.username.$dirty) return errors;
+      !this.$v.username.maxLength && errors.push("字符不能超过10个");
+      !this.$v.username.required && errors.push("名字不能为空");
+      return errors;
+    },
+    emailErrors() {
+      const errors = [];
+      if (!this.$v.email.$dirty) return errors;
+      !this.$v.email.email && errors.push("请输入合法邮箱");
+      !this.$v.email.required && errors.push("邮箱不能为空");
+      return errors;
+    },
+    passwordErrors() {
+      const errors = [];
+      if (!this.$v.password.$dirty) return errors;
+      !this.$v.password.minLength && errors.push("密码至少8位字符|");
+      !this.$v.password.required && errors.push("密码不能为空");
+      return errors;
+    },
+    passwordConfirmErrors() {
+      const errors = [];
+      if (!this.$v.password_confirmation.$dirty) return errors;
+      !this.$v.password_confirmation.minLength &&
+        errors.push("密码至少8位字符|");
+      !this.$v.password_confirmation.required && errors.push("密码不能为空");
+      return errors;
     }
   }
 };

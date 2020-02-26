@@ -63,10 +63,9 @@ export default new Vuex.Store({
           method: "POST"
         })
           .then(resp => {
+            console.log(resp);
             const username = resp.data.username;
-
             localStorage.setItem("username", username);
-            this.$router.push("/login");
             resolve(resp);
           })
           .catch(err => {
