@@ -9,6 +9,7 @@ import Mathjax from "@/views/Mathjax.vue";
 import Useredit from "@/components/Useredit.vue";
 // import Home from "../views/Home.vue";
 import store from "@/store/index";
+import * as Meta from "../plugins/configAllPage.js";
 
 Vue.use(VueRouter);
 
@@ -24,8 +25,7 @@ const router = new VueRouter({
     {
       path: "/login",
       name: "login",
-      component: Login,
-      meta: { keepAlive: false }
+      component: Login
     },
     {
       path: "/register",
@@ -36,25 +36,25 @@ const router = new VueRouter({
       path: "/student/add",
       name: "studentadd",
       component: StudentAdd,
-      meta: { keepAlive: true, requiresAuth: true }
+      meta: Meta.pageRequired
     },
     {
       path: "/student/:id",
       name: "studentinfo",
       component: StudentEdit,
-      meta: { keepAlive: true, requiresAuth: true }
+      meta: Meta.pageRequired
     },
     {
       path: "/",
       name: "studentlist",
       component: StudentList,
-      meta: { keepAlive: true, requiresAuth: true }
+      meta: Meta.pageRequired
     },
     {
       path: "/user/edit",
       name: "useredit",
       component: Useredit,
-      meta: { keepAlive: true, requiresAuth: true }
+      meta: Meta.pageRequired
     }
   ]
 });
