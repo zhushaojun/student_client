@@ -3,7 +3,7 @@
 import Vue from "vue";
 import axios from "axios";
 // import store from "../store";
-// import store from "../store/index";
+import store from "../store/index";
 // Full config:  https://github.com/axios/axios#request-config
 // axios.defaults.baseURL = process.env.baseURL || process.env.apiUrl || '';
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
@@ -48,26 +48,43 @@ _axios.interceptors.response.use(
     const originalRequest = error.config;
     // Do something with response error
     if (error.response.status === 401) {
-      const refresh_token = window.localStorage.getItem("refresh_token");
-      // store.dispatch("refresh", { refresh: refresh_token });
-      console.log("刷新token为:");
-      console.log(refresh_token);
-      console.log("获取需求");
-      originalRequest._retry = true;
-      axios
-        .post("http://frp.oailab.cn:6101/auth/jwt/refresh/", {
-          refresh: refresh_token
-        })
+      const refresh_token = localStorage.getItem("refresh_token");
+      store
+        .dispatch("refresh", refresh_token)
         .then(resp => {
-          // console.log(resp.data.access);
-          window.localStorage.setItem("token", resp.data.access);
-          console.log("新的access_token为:");
-          console.log(window.localStorage.getItem("token"));
-          axios.defaults.headers.common.Authorization =
-            "Bearer " + resp.data.access;
-          // originalRequest.headers.Authorization = "Bearer " + resp.data.access;
-          // return axios(originalRequest);
-        });
+          originalRequest._retry = true;
+
+          console.log("retry token:" + resp.data.access);
+          console.log(
+            "originalRequest.headers.Authorization: " +
+              originalRequest.headers.Authorization
+          );
+          originalRequest.headers.Authorization = "Bearer " + resp.data.access;
+          console.log(
+            "originalRequest.headers.Authorization(changed): " +
+              originalRequest.headers.Authorization
+          );
+          return axios(originalRequest);
+        })
+        .catch(err => console.log(err));
+      // console.log("刷新token为:");
+      // console.log(refresh_token);
+      // console.log("获取需求");
+      // originalRequest._retry = true;
+      // axios
+      //   .post("http://frp.oailab.cn:6101/auth/jwt/refresh/", {
+      //     refresh: refresh_token
+      //   })
+      //   .then(resp => {
+      //     // console.log(resp.data.access);
+      //     window.localStorage.setItem("token", resp.data.access);
+      //     console.log("新的access_token为:");
+      //     console.log(localStorage.getItem("token"));
+      //     axios.defaults.headers.common.Authorization =
+      //       "Bearer " + resp.data.access;
+      //     originalRequest.headers.Authorization = "Bearer " + resp.data.access;
+      //     return axios(originalRequest);
+      //   });
     }
     return Promise.reject(error);
   }

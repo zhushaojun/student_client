@@ -6,9 +6,15 @@
           <div class="overline mb-4">
             <span class="title font-weight-light">学生信息</span>
           </div>
-          <v-list-item-title class="mb-1 mb-4">姓名：{{ student.name }}</v-list-item-title>
-          <v-list-item-title class="mb-1 mb-4">性别：{{ student.gender }}</v-list-item-title>
-          <v-list-item-title class="mb-1 mb-4">学号：{{ student.number }}</v-list-item-title>
+          <v-list-item-title class="mb-1 mb-4"
+            >姓名：{{ student.name }}</v-list-item-title
+          >
+          <v-list-item-title class="mb-1 mb-4"
+            >性别：{{ student.gender }}</v-list-item-title
+          >
+          <v-list-item-title class="mb-1 mb-4"
+            >学号：{{ student.number }}</v-list-item-title
+          >
         </v-list-item-content>
         <!-- <v-list-item-avatar tile size="80" color="grey">
           <v-img class="elevation-6" :src="student.photo"></v-img>
@@ -34,7 +40,11 @@
                   课程成绩
                   <v-divider class="mx-4" inset vertical></v-divider>
                   <v-spacer></v-spacer>
-                  <v-switch v-model="disabled" class="ma-2" label="修改"></v-switch>
+                  <v-switch
+                    v-model="disabled"
+                    class="ma-2"
+                    label="修改"
+                  ></v-switch>
                 </v-card-title>
                 <v-simple-table class="ml-10 mr-10">
                   <template v-slot:default>
@@ -46,8 +56,8 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="(item,index) in student.courses" :key="index">
-                        <td>{{index+1}}</td>
+                      <tr v-for="(item, index) in student.courses" :key="index">
+                        <td>{{ index + 1 }}</td>
                         <td>
                           <v-text-field
                             :disabled="!disabled"

@@ -86,12 +86,14 @@ export default new Vuex.Store({
         commit("auth_request");
         axios({
           url: "http://frp.oailab.cn:6101/auth/jwt/refresh/",
-          data: refresh_token,
+          data: { refresh: refresh_token },
           method: "POST"
         })
           .then(resp => {
-            // console.log(resp.data.access);
+            console.log("new access token in store: " + resp.data.access);
             localStorage.setItem("token", resp.data.access);
+            axios.defaults.headers.common["Authorization"] =
+              "Bearer " + resp.data.access;
             resolve(resp);
           })
           .catch(err => {
