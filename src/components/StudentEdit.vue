@@ -76,16 +76,16 @@
                     </tbody>
                   </template>
                 </v-simple-table>
-                <!-- <v-btn color="primary" position: absolute right dark class="mb-12 mt-10" @click="submit">确定</v-btn> -->
               </v-card-text>
+              <v-btn color="primary" position: absolute right dark class="mb-12 mt-10" @click="submit">确定</v-btn>
             </v-card>
           </v-tab-item>
           <!--computes-->
           <v-tab-item>
             <v-card flat>
               <v-card-text>
-                <textarea v-model="formula" cols="30" rows="10"></textarea>
-                <Mathjax :formula="formula"></Mathjax>
+                <!-- <textarea v-model="formula" cols="30" rows="10"></textarea>
+                <Mathjax :formula="formula"></Mathjax> -->
               </v-card-text>
             </v-card>
           </v-tab-item>
@@ -96,16 +96,15 @@
 </template>
 <script>
 // import { Mathjax } from "../views/Mathjax";
-import Mathjax from "@/views/Mathjax.vue";
 export default {
   components: {
-    Mathjax: Mathjax
+    // Mathjax: Mathjax
   },
   data: () => ({
     student: "",
     disabled: false,
     cards: ["access", "inputs", "computes"],
-    formula: "$$x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.$$"
+    // formula: "$$x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.$$"
   }),
   methods: {
     submit() {
