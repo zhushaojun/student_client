@@ -7,7 +7,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     status: "",
-    token: localStorage.getItem("token") || "",
+    token: localStorage.getItem("access_token") || "",
     username: ""
   },
   mutations: {
@@ -32,22 +32,24 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         commit("auth_request");
         axios({
-          url: "http://frp.oailab.cn:6101/auth/token/login/",
+          url: "http://frp.oailab.cn:6101/auth/jwt/create/",
           data: user,
           method: "POST"
         })
           .then(resp => {
-            const token = resp.data.auth_token;
+            const token = resp.data.access;
+            const refresh_token = resp.data.refresh;
             const username = user.username;
             localStorage.setItem("username", username);
-            localStorage.setItem("token", token);
-            axios.defaults.headers.common["Authorization"] = "Token " + token;
+            localStorage.setItem("access_token", token);
+            localStorage.setItem("refresh_token", refresh_token);
+            axios.defaults.headers.common["Authorization"] = "Bearer " + token;
             commit("auth_success", token, username);
             resolve(resp);
           })
           .catch(err => {
             commit("auth_error");
-            localStorage.removeItem("token");
+            localStorage.removeItem("access_token");
             reject(err);
           });
       });
@@ -61,20 +63,34 @@ export default new Vuex.Store({
           method: "POST"
         })
           .then(resp => {
-            //TODO
-            // const email = resp.data.email;
-            // const id = resp.data.id;
             const username = resp.data.username;
 
             localStorage.setItem("username", username);
             this.$router.push("/login");
-            // axios.defaults.headers.common["Authorization"] = token;
-            // commit("auth_success", token, user);
             resolve(resp);
           })
           .catch(err => {
             commit("auth_error", err);
-            localStorage.removeItem("token");
+            localStorage.removeItem("access_token");
+            reject(err);
+          });
+      });
+    },
+    refresh({ commit }, refresh_token) {
+      return new Promise((resolve, reject) => {
+        commit("auth_request");
+        axios({
+          url: "http://frp.oailab.cn:6101/auth/jwt/refresh/",
+          data: { refresh: refresh_token },
+          method: "POST"
+        })
+          .then(resp => {
+            localStorage.setItem("access_token", resp.data.access);
+            axios.defaults.headers.common["Authorization"] =
+              "Bearer " + resp.data.access;
+            resolve(resp);
+          })
+          .catch(err => {
             reject(err);
           });
       });
@@ -82,7 +98,8 @@ export default new Vuex.Store({
     logout({ commit }) {
       return new Promise(resolve => {
         commit("logout");
-        localStorage.removeItem("token");
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
         delete axios.defaults.headers.common["Authorization"];
         resolve();
       });

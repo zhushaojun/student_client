@@ -15,7 +15,12 @@
             </v-row>
           </v-card-text>
         </v-card>
-        <v-btn class="btn" color="success" @click="submit">提交</v-btn>
+        <v-row justify="end">
+          <div class="col-md-2">
+            <v-btn class="btn mr-6" color="info" @click="test">修改</v-btn>
+            <v-btn class="btn" color="success" @click="submit">提交</v-btn>
+          </div>
+        </v-row>
       </v-form>
     </v-container>
   </div>
@@ -33,7 +38,7 @@ export default {
   methods: {
     submit() {
       this.axios
-        .put("http://frp.oailab.cn:6101/auth/users/me/", {
+        .patch("http://frp.oailab.cn:6101/auth/users/me/", {
           email: this.email
         })
         .then(res => {
