@@ -9,7 +9,7 @@
               <v-spacer></v-spacer>
             </v-toolbar>
             <v-card-text>
-              <v-form>
+              <v-form @keydown.enter="test">
                 <v-text-field
                   label="Login"
                   name="login"
@@ -29,9 +29,12 @@
               </v-form>
             </v-card-text>
             <v-card-actions>
-              <v-btn @click="register" color="primary">Register</v-btn>
-              <v-spacer></v-spacer>
-              <v-btn @click="login" color="primary">Login</v-btn>
+              <v-row justify="space-around">
+                <v-btn @click="register" color="primary">Register</v-btn>
+                <v-btn @click="login" color="primary">
+                  Login
+                </v-btn>
+              </v-row>
             </v-card-actions>
           </v-card>
         </v-col>
@@ -46,6 +49,16 @@ export default {
     return {
       username: "",
       password: ""
+    };
+  },
+  created() {
+    let that = this;
+    document.onkeypress = function(e) {
+      var keycode = document.all ? event.keyCode : e.which;
+      if (keycode == 13) {
+        that.login(); // 登录方法名
+        return false;
+      }
     };
   },
   methods: {
