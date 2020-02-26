@@ -6,15 +6,10 @@
           <div class="overline mb-4">
             <span class="title font-weight-light">学生信息</span>
           </div>
-          <v-list-item-title class="mb-1 mb-4"
-            >姓名：{{ student.name }}</v-list-item-title
-          >
-          <v-list-item-title class="mb-1 mb-4"
-            >性别：{{ student.gender }}</v-list-item-title
-          >
-          <v-list-item-title class="mb-1 mb-4"
-            >学号：{{ student.number }}</v-list-item-title
-          >
+          <v-list-item-title class="mb-1 mb-4">姓名：{{ student.name }}</v-list-item-title>
+          <v-list-item-title class="mb-1 mb-4">性别：{{ student.gender }}</v-list-item-title>
+          <v-list-item-title class="mb-1 mb-4">学号：{{ student.number }}</v-list-item-title>
+          <v-text-field v-model="student.number" style="width:30%" dense></v-text-field>
         </v-list-item-content>
         <!-- <v-list-item-avatar tile size="80" color="grey">
           <v-img class="elevation-6" :src="student.photo"></v-img>
@@ -38,11 +33,7 @@
                   课程成绩
                   <v-divider class="mx-4" inset vertical></v-divider>
                   <v-spacer></v-spacer>
-                  <v-switch
-                    v-model="disabled"
-                    class="ma-2"
-                    label="修改"
-                  ></v-switch>
+                  <v-switch v-model="disabled" class="ma-2" label="修改"></v-switch>
                 </v-card-title>
                 <v-simple-table class="ml-5 mr-5">
                   <template v-slot:default>
@@ -85,7 +76,7 @@
             <v-card flat>
               <v-card-text>
                 <!-- <textarea v-model="formula" cols="30" rows="10"></textarea>
-                <Mathjax :formula="formula"></Mathjax> -->
+                <Mathjax :formula="formula"></Mathjax>-->
               </v-card-text>
             </v-card>
           </v-tab-item>
@@ -103,7 +94,7 @@ export default {
   data: () => ({
     student: "",
     disabled: false,
-    cards: ["access", "inputs", "computes"],
+    cards: ["access", "inputs", "computes"]
     // formula: "$$x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.$$"
   }),
   methods: {
@@ -112,7 +103,7 @@ export default {
         .patch(`students/${this.$route.params.id}/`, {
           name: this.student.name,
           number: this.student.number,
-          courses: this.student.courses.inputs
+          courses: this.student.courses
         })
         .then();
     }
@@ -123,7 +114,7 @@ export default {
       .get(`students/${this.$route.params.id}/`)
       .then(response => {
         this.student = response.data;
-        console.log(this.student.courses.inputs);
+        console.log(this.courses);
       })
       .catch(function(error) {
         // 请求失败处理
