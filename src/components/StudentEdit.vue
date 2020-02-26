@@ -12,12 +12,10 @@
         </v-list-item-content>
         <!-- <v-list-item-avatar tile size="80" color="grey">
           <v-img class="elevation-6" :src="student.photo"></v-img>
-        </v-list-item-avatar> -->
+        </v-list-item-avatar>-->
       </v-list-item>
 
-      <!-- <Grades v-bind:userInfo="this.student.courses"></Grades> -->
-
-      <v-card max-width="700" height="600">
+      <v-card class="mt-2 mb-2" min-height="380">
         <v-tabs background-color="indigo" dark>
           <v-tab v-for="(card, index) in cards" :key="index">{{ card }}</v-tab>
           <!--access-->
@@ -36,7 +34,7 @@
                   <v-spacer></v-spacer>
                   <v-switch v-model="disabled" class="ma-2" label="修改"></v-switch>
                 </v-card-title>
-                <v-simple-table class="ml-10 mr-10">
+                <v-simple-table class="ml-5 mr-5">
                   <template v-slot:default>
                     <thead>
                       <tr>
@@ -46,7 +44,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="(item,index) in student.courses" :key="index">
+                      <tr v-for="(item,index) in student.courses.inputs" :key="index">
                         <td>{{index+1}}</td>
                         <td>
                           <v-text-field
@@ -68,13 +66,17 @@
                     </tbody>
                   </template>
                 </v-simple-table>
+                <!-- <v-btn color="primary" position: absolute right dark class="mb-12 mt-10" @click="submit">确定</v-btn> -->
               </v-card-text>
             </v-card>
           </v-tab-item>
           <!--computes-->
           <v-tab-item>
             <v-card flat>
-              <v-card-text></v-card-text>
+              <v-card-text>
+                <textarea v-model="formula" cols="30" rows="10"></textarea>
+                <Mathjax :formula="formula"></Mathjax>
+              </v-card-text>
             </v-card>
           </v-tab-item>
         </v-tabs>
@@ -83,15 +85,17 @@
   </div>
 </template>
 <script>
-// import Grades from "../components/Grades";
+// import { Mathjax } from "../views/Mathjax";
+import Mathjax from "@/views/Mathjax.vue";
 export default {
   components: {
-    // Grades
+    Mathjax: Mathjax
   },
   data: () => ({
     student: "",
     disabled: false,
-    cards: ["access", "inputs", "computes"]
+    cards: ["access", "inputs", "computes"],
+    formula: "$$x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.$$"
   }),
   methods: {
     submit() {
@@ -99,7 +103,7 @@ export default {
         .patch(`students/${this.$route.params.id}/`, {
           name: this.student.name,
           number: this.student.number,
-          courses: this.student.courses
+          courses: this.student.courses.inputs
         })
         .then();
     }
@@ -110,7 +114,7 @@ export default {
       .get(`students/${this.$route.params.id}/`)
       .then(response => {
         this.student = response.data;
-        console.log(this.student);
+        console.log(this.student.courses.inputs);
       })
       .catch(function(error) {
         // 请求失败处理
