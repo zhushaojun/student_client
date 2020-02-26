@@ -60,10 +60,10 @@ export default new Vuex.Store({
         axios({
           url: "http://frp.oailab.cn:6101/auth/users/",
           data: user,
-          method: "POST"
+          method: "POST",
+          headers: { "Content-Type": "application/json" }
         })
           .then(resp => {
-            console.log(resp);
             const username = resp.data.username;
             localStorage.setItem("username", username);
             resolve(resp);
