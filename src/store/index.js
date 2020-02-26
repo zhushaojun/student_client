@@ -7,7 +7,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     status: "",
-    token: localStorage.getItem("token") || "",
+    token: localStorage.getItem("access_token") || "",
     username: ""
   },
   mutations: {
@@ -41,7 +41,7 @@ export default new Vuex.Store({
             const refresh_token = resp.data.refresh;
             const username = user.username;
             localStorage.setItem("username", username);
-            localStorage.setItem("token", token);
+            localStorage.setItem("access_token", token);
             localStorage.setItem("refresh_token", refresh_token);
             axios.defaults.headers.common["Authorization"] = "Bearer " + token;
             commit("auth_success", token, username);
@@ -49,7 +49,7 @@ export default new Vuex.Store({
           })
           .catch(err => {
             commit("auth_error");
-            localStorage.removeItem("token");
+            localStorage.removeItem("access_token");
             reject(err);
           });
       });
@@ -63,20 +63,15 @@ export default new Vuex.Store({
           method: "POST"
         })
           .then(resp => {
-            //TODO
-            // const email = resp.data.email;
-            // const id = resp.data.id;
             const username = resp.data.username;
 
             localStorage.setItem("username", username);
             this.$router.push("/login");
-            // axios.defaults.headers.common["Authorization"] = token;
-            // commit("auth_success", token, user);
             resolve(resp);
           })
           .catch(err => {
             commit("auth_error", err);
-            localStorage.removeItem("token");
+            localStorage.removeItem("access_token");
             reject(err);
           });
       });
@@ -90,8 +85,7 @@ export default new Vuex.Store({
           method: "POST"
         })
           .then(resp => {
-            console.log("new access token in store: " + resp.data.access);
-            localStorage.setItem("token", resp.data.access);
+            localStorage.setItem("access_token", resp.data.access);
             axios.defaults.headers.common["Authorization"] =
               "Bearer " + resp.data.access;
             resolve(resp);
@@ -104,7 +98,8 @@ export default new Vuex.Store({
     logout({ commit }) {
       return new Promise(resolve => {
         commit("logout");
-        localStorage.removeItem("token");
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
         delete axios.defaults.headers.common["Authorization"];
         resolve();
       });
