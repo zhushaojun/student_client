@@ -161,15 +161,15 @@ export default {
       this.name = "";
       this.gendr = null;
       this.number = "";
-      this.left_eye = "";
+      this.left_eye = {};
     },
     done() {
       this.snackbar = true;
+      this.reset();
     },
     submit() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
-        console.log(this.left_eye);
         const form = new FormData();
         form.append("name", this.name);
         form.append("gender", this.gender);
