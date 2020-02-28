@@ -67,15 +67,50 @@
                   </template>
                 </v-simple-table>
               </v-card-text>
-              <v-btn color="primary" position: absolute right dark class="mb-12 mt-10" @click="submit">确定</v-btn>
+              <v-btn color="primary" right dark class="mb-12 mt-10" @click="submit">确定</v-btn>
             </v-card>
           </v-tab-item>
           <!--computes-->
           <v-tab-item>
             <v-card flat>
               <v-card-text>
-                <!-- <textarea v-model="formula" cols="30" rows="10"></textarea>
-                <Mathjax :formula="formula"></Mathjax>-->
+                <v-card-title>
+                  学分绩点
+                  <v-divider class="mx-4" inset vertical></v-divider>
+                  <v-spacer></v-spacer>
+                </v-card-title>
+                <v-simple-table class="ml-5 mr-5">
+                  <template v-slot:default>
+                    <thead>
+                      <tr>
+                        <th class="text-left">序号</th>
+                        <th class="text-left">课程</th>
+                        <th class="text-left">分数</th>
+                        <th class="text-left">学分</th>
+                        <th class="text-left">绩点</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="(item,index) in student.courses.inputs" :key="index">
+                        <td>{{index+1}}</td>
+                        <td>
+                          <v-text-field disabled v-model="item.课程" style="width:30%" dense></v-text-field>
+                        </td>
+                        <td>
+                          <v-text-field disabled v-model="item.分数" style="width:30%" dense></v-text-field>
+                        </td>
+                        <td>
+                          <v-text-field disabled value="1" style="width:30%" dense></v-text-field>
+                        </td>
+                        <td>
+                          <v-text-field disabled v-model="courseGPA" style="width:30%" dense></v-text-field>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </template>
+                </v-simple-table>
+                平均学分绩点为：
+                <v-text-field disabled v-model="averageGPA" style="width:30%" dense></v-text-field>
               </v-card-text>
             </v-card>
           </v-tab-item>
@@ -85,16 +120,12 @@
   </div>
 </template>
 <script>
-// import { Mathjax } from "../views/Mathjax";
 export default {
-  components: {
-    // Mathjax: Mathjax
-  },
+  components: {},
   data: () => ({
     student: "",
     disabled: false,
     cards: ["access", "inputs", "computes"]
-    // formula: "$$x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.$$"
   }),
   methods: {
     submit() {
@@ -113,13 +144,42 @@ export default {
       .get(`students/${this.$route.params.id}/`)
       .then(response => {
         this.student = response.data;
-        console.log(this.courses);
+        // console.log(this.student.courses.inputs.length);
       })
       .catch(function(error) {
         // 请求失败处理
         console.log(error);
       });
   },
-  computed: {}
+  computed: {
+    courseGPA() {
+      //每门课的绩点
+      var GPA = 0;
+      for (var i = 0; i < this.student.courses.inputs.length; i++) {
+        if(this.student.courses.inputs[i].分数<60) return GPA=0
+        else if(this.student.courses.inputs[i].分数<=63&&this.student.courses.inputs[i].分数>=60) GPA=1.3
+        else if(this.student.courses.inputs[i].分数<=67&&this.student.courses.inputs[i].分数>=64) GPA=1.5
+        else if(this.student.courses.inputs[i].分数<=71&&this.student.courses.inputs[i].分数>=68) GPA=2.0
+        else if(this.student.courses.inputs[i].分数<=74&&this.student.courses.inputs[i].分数>=72) GPA=2.3
+        else if(this.student.courses.inputs[i].分数<=77&&this.student.courses.inputs[i].分数>=75) GPA=2.7
+        else if(this.student.courses.inputs[i].分数<=81&&this.student.courses.inputs[i].分数>=78) GPA=3.0
+        else if(this.student.courses.inputs[i].分数<=84&&this.student.courses.inputs[i].分数>=82) GPA=3.3
+        else if(this.student.courses.inputs[i].分数<=89&&this.student.courses.inputs[i].分数>=85) GPA=3.7
+        else GPA=4.0
+      }
+      return GPA
+    },
+    averageGPA() {
+      //平均学分绩点
+      //假设每门课学分为1
+      var aGPA = 0;
+      var sumGPA = 0;
+      for (var i = 0; i < this.student.courses.inputs.length; i++) {
+        sumGPA = aGPA + this.student.courses.inputs[i].分数;
+      }
+      aGPA = sumGPA / this.student.courses.inputs.length;
+      return aGPA;
+    }
+  }
 };
 </script>
