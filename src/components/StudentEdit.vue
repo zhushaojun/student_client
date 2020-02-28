@@ -6,15 +6,20 @@
           <div class="overline mb-4">
             <span class="title font-weight-light">学生个人信息</span>
           </div>
-          <v-list-item-title class="mb-1 mb-4">姓名：{{ student.name }}</v-list-item-title>
-          <v-list-item-title class="mb-1 mb-4">性别：{{ student.gender }}</v-list-item-title>
-          <v-list-item-title class="mb-1 mb-4">学号：{{ student.number }}</v-list-item-title>
+          <v-list-item-title class="mb-1 mb-4"
+            >姓名：{{ student.name }}</v-list-item-title
+          >
+          <v-list-item-title class="mb-1 mb-4"
+            >性别：{{ student.gender }}</v-list-item-title
+          >
+          <v-list-item-title class="mb-1 mb-4"
+            >学号：{{ student.number }}</v-list-item-title
+          >
         </v-list-item-content>
         <v-list-item-avatar tile size="80" color="grey">
           <v-img class="elevation-6" :src="student.photo"></v-img>
         </v-list-item-avatar>
       </v-list-item>
-
       <v-card class="mt-2 mb-2" min-height="380">
         <v-tabs background-color="indigo" dark>
           <v-tab v-for="(card, index) in cards" :key="index">{{ card }}</v-tab>
@@ -32,7 +37,11 @@
                   课程成绩
                   <v-divider class="mx-4" inset vertical></v-divider>
                   <v-spacer></v-spacer>
-                  <v-switch v-model="disabled" class="ma-2" label="修改"></v-switch>
+                  <v-switch
+                    v-model="disabled"
+                    class="ma-2"
+                    label="修改"
+                  ></v-switch>
                 </v-card-title>
                 <v-simple-table class="ml-5 mr-5">
                   <template v-slot:default>
@@ -44,8 +53,11 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="(item,index) in student.courses.inputs" :key="index">
-                        <td>{{index+1}}</td>
+                      <tr
+                        v-for="(item, index) in student.courses.inputs"
+                        :key="index"
+                      >
+                        <td>{{ index + 1 }}</td>
                         <td>
                           <v-text-field
                             :disabled="!disabled"
@@ -67,7 +79,14 @@
                   </template>
                 </v-simple-table>
               </v-card-text>
-              <v-btn color="primary" right dark class="mb-12 mt-10" @click="submit">确定</v-btn>
+              <v-btn
+                color="primary"
+                right
+                dark
+                class="mb-12 mt-10"
+                @click="submit"
+                >确定</v-btn
+              >
             </v-card>
           </v-tab-item>
           <!--computes-->
@@ -91,26 +110,49 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="(item,index) in student.courses.inputs" :key="index">
-                        <td>{{index+1}}</td>
+                      <tr
+                        v-for="(item, index) in student.courses.inputs"
+                        :key="index"
+                      >
+                        <td>{{ index + 1 }}</td>
                         <td>
-                          <v-text-field disabled v-model="item.课程" style="width:30%" dense></v-text-field>
+                          <v-text-field
+                            disabled
+                            v-model="item.课程"
+                            style="width:30%"
+                            dense
+                          ></v-text-field>
                         </td>
                         <td>
-                          <v-text-field disabled v-model="item.分数" style="width:30%" dense></v-text-field>
+                          <v-text-field
+                            disabled
+                            v-model="item.分数"
+                            style="width:30%"
+                            dense
+                          ></v-text-field>
                         </td>
                         <td>
-                          <v-text-field disabled value="1" style="width:30%" dense></v-text-field>
+                          <v-text-field
+                            disabled
+                            value="1"
+                            style="width:30%"
+                            dense
+                          ></v-text-field>
                         </td>
                         <td>
-                          <v-text-field disabled v-model="courseGPA" style="width:30%" dense></v-text-field>
+                          {{ courseGPA(item.分数) }}
                         </td>
                       </tr>
                     </tbody>
                   </template>
                 </v-simple-table>
                 平均学分绩点为：
-                <v-text-field disabled v-model="averageGPA" style="width:30%" dense></v-text-field>
+                <v-text-field
+                  disabled
+                  v-model="averageGPA"
+                  style="width:30%"
+                  dense
+                ></v-text-field>
               </v-card-text>
             </v-card>
           </v-tab-item>
@@ -136,6 +178,21 @@ export default {
           courses: this.student.courses
         })
         .then();
+    },
+    courseGPA(e) {
+      //每门课的绩点
+      var GPA = 0;
+      if (e < 60) GPA = 0;
+      else if (e <= 63 && e >= 60) GPA = 1.3;
+      else if (e <= 67 && e >= 64) GPA = 1.5;
+      else if (e <= 71 && e >= 68) GPA = 2.0;
+      else if (e <= 74 && e >= 72) GPA = 2.3;
+      else if (e <= 77 && e >= 75) GPA = 2.7;
+      else if (e <= 81 && e >= 78) GPA = 3.0;
+      else if (e <= 84 && e >= 82) GPA = 3.3;
+      else if (e <= 89 && e >= 85) GPA = 3.7;
+      else GPA = 4.0;
+      return GPA;
     }
   },
   mounted() {
@@ -144,6 +201,7 @@ export default {
       .get(`students/${this.$route.params.id}/`)
       .then(response => {
         this.student = response.data;
+        console.log(response.data);
         // console.log(this.student.courses.inputs.length);
       })
       .catch(function(error) {
@@ -152,22 +210,8 @@ export default {
       });
   },
   computed: {
-    courseGPA() {
-      //每门课的绩点
-      var GPA = 0;
-      for (var i = 0; i < this.student.courses.inputs.length; i++) {
-        if(this.student.courses.inputs[i].分数<60) return GPA=0
-        else if(this.student.courses.inputs[i].分数<=63&&this.student.courses.inputs[i].分数>=60) GPA=1.3
-        else if(this.student.courses.inputs[i].分数<=67&&this.student.courses.inputs[i].分数>=64) GPA=1.5
-        else if(this.student.courses.inputs[i].分数<=71&&this.student.courses.inputs[i].分数>=68) GPA=2.0
-        else if(this.student.courses.inputs[i].分数<=74&&this.student.courses.inputs[i].分数>=72) GPA=2.3
-        else if(this.student.courses.inputs[i].分数<=77&&this.student.courses.inputs[i].分数>=75) GPA=2.7
-        else if(this.student.courses.inputs[i].分数<=81&&this.student.courses.inputs[i].分数>=78) GPA=3.0
-        else if(this.student.courses.inputs[i].分数<=84&&this.student.courses.inputs[i].分数>=82) GPA=3.3
-        else if(this.student.courses.inputs[i].分数<=89&&this.student.courses.inputs[i].分数>=85) GPA=3.7
-        else GPA=4.0
-      }
-      return GPA
+    test(e) {
+      return e + 3;
     },
     averageGPA() {
       //平均学分绩点
