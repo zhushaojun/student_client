@@ -68,11 +68,7 @@
 </style>
 <script>
 import { validationMixin } from "vuelidate";
-import {
-  required,
-  minLength,
-  email
-} from "vuelidate/lib/validators";
+import { required, minLength, email } from "vuelidate/lib/validators";
 export default {
   name: "Register",
   mixins: [validationMixin],
@@ -114,10 +110,10 @@ export default {
         if (this.password === this.password_confirmation) {
           this.$store
             .dispatch("signup", data)
-            .then((res) => {
+            .then(res => {
               this.$router.push("/signin");
               console.log(res);
-              })
+            })
             .catch(err => console.log(err));
         } else {
           this.tipsbar("两次密码不一致，请检查");

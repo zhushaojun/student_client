@@ -61,7 +61,7 @@ export default {
         route: { name: "studentlist" }
       },
       { title: "学生注册", icon: "mdi-pencil", route: { name: "studentadd" } },
-      { title: "修改密码", icon: "mdi-lock", route: { name: "changepassword" } },
+      { title: "修改密码", icon: "mdi-lock", route: { name: "changepassword" } }
     ]
   }),
   methods: {
