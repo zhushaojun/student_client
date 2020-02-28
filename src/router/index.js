@@ -3,10 +3,11 @@ import VueRouter from "vue-router";
 import StudentEdit from "@/components/StudentEdit.vue";
 import StudentList from "@/components/StudentList.vue";
 import StudentAdd from "@/components/StudentAdd.vue";
-import Login from "@/components/auth/Login.vue";
-import Register from "@/components/auth/Register.vue";
+import Signin from "@/components/auth/Signin.vue";
+import Signup from "@/components/auth/Signup.vue";
+import ChangePassword from "@/components/auth/ChangePassword.vue";
+import Profile from "@/components/auth/Profile.vue";
 import Mathjax from "@/views/Mathjax.vue";
-import Useredit from "@/components/Useredit.vue";
 // import Home from "../views/Home.vue";
 import store from "@/store/index";
 import * as Meta from "../plugins/configAllPage.js";
@@ -23,14 +24,14 @@ const router = new VueRouter({
       component: Mathjax
     },
     {
-      path: "/login",
-      name: "login",
-      component: Login
+      path: "/signin",
+      name: "signin",
+      component: Signin
     },
     {
-      path: "/register",
-      name: "register",
-      component: Register
+      path: "/signup",
+      name: "signup",
+      component: Signup
     },
     {
       path: "/student/add",
@@ -51,9 +52,15 @@ const router = new VueRouter({
       meta: Meta.pageRequired
     },
     {
-      path: "/user/edit",
-      name: "useredit",
-      component: Useredit,
+      path: "/changepassword",
+      name: "changepassword",
+      component: ChangePassword,
+      meta: Meta.pageRequired
+    },
+    {
+      path: "/profile",
+      name: "profile",
+      component: Profile,
       meta: Meta.pageRequired
     }
   ]
@@ -65,7 +72,7 @@ router.beforeEach((to, from, next) => {
       next();
       return;
     }
-    next("/login");
+    next("/signin");
   } else {
     next();
   }

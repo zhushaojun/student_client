@@ -157,7 +157,11 @@ export default {
   },
   methods: {
     reset() {
-      this.$refs.formData.reset();
+      this.$v.$reset();
+      this.name = "";
+      this.gendr = null;
+      this.number = "";
+      this.left_eye = {};
     },
     done() {
       this.snackbar = true;
@@ -166,7 +170,6 @@ export default {
     submit() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
-        console.log(this.left_eye);
         const form = new FormData();
         form.append("name", this.name);
         form.append("gender", this.gender);
