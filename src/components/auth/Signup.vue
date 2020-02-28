@@ -108,6 +108,16 @@ export default {
       password_confirmation: ""
     };
   },
+  created() {
+    let that = this;
+    document.onkeypress = function(e) {
+      var keycode = document.all ? event.keyCode : e.which;
+      if (keycode == 13) {
+        that.register();
+        return false;
+      }
+    };
+  },
   methods: {
     register() {
       let data = {
