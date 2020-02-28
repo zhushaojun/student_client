@@ -29,7 +29,7 @@
     <v-app-bar app color="teal lighten-1" dark>
       <v-spacer></v-spacer>
       <!-- userinfo区域 -->
-      <router-link :to="{ name: 'useredit' }">
+      <router-link :to="{ name: 'profile' }">
         <v-avatar>
           <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
         </v-avatar>
@@ -60,14 +60,15 @@ export default {
         icon: "mdi-dialpad",
         route: { name: "studentlist" }
       },
-      { title: "学生注册", icon: "mdi-pencil", route: { name: "studentadd" } }
+      { title: "学生注册", icon: "mdi-pencil", route: { name: "studentadd" } },
+      { title: "修改密码", icon: "mdi-lock", route: { name: "changepassword" } },
     ]
   }),
   methods: {
     logout() {
       this.$store
         .dispatch("logout")
-        .then(() => this.$router.push("/login"))
+        .then(() => this.$router.push("/signin"))
         .catch(err => console.log(err));
     }
   }

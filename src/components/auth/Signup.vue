@@ -7,18 +7,6 @@
             <v-row>
               <v-col md="10" offset-md="1">
                 <v-text-field
-                  v-model="username"
-                  :error-messages="usernameErrors"
-                  label="Username"
-                  required
-                  @input="$v.username.$touch()"
-                  @blur="$v.username.$touch()"
-                ></v-text-field>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col md="10" offset-md="1">
-                <v-text-field
                   v-model="email"
                   :error-messages="emailErrors"
                   label="xxx@example.com"
@@ -82,7 +70,6 @@
 import { validationMixin } from "vuelidate";
 import {
   required,
-  maxLength,
   minLength,
   email
 } from "vuelidate/lib/validators";
@@ -90,7 +77,6 @@ export default {
   name: "Register",
   mixins: [validationMixin],
   validations: {
-    username: { required, maxLength: maxLength(10) },
     email: { required, email },
     password: { required, minLength: minLength(8) },
     password_confirmation: { required, minLength: minLength(8) }
@@ -102,7 +88,6 @@ export default {
       snackbar: false,
       timeout: 3000,
       tips: "",
-      username: "",
       email: "",
       password: "",
       password_confirmation: ""
@@ -121,15 +106,18 @@ export default {
   methods: {
     register() {
       let data = {
-        username: this.username,
         email: this.email,
         password: this.password
       };
       if (!this.$v.$invalid) {
+        console.log(data);
         if (this.password === this.password_confirmation) {
           this.$store
-            .dispatch("register", data)
-            .then(() => this.$router.push("/login"))
+            .dispatch("signup", data)
+            .then((res) => {
+              this.$router.push("/signin");
+              console.log(res);
+              })
             .catch(err => console.log(err));
         } else {
           this.tipsbar("两次密码不一致，请检查");
@@ -140,7 +128,6 @@ export default {
     },
     reset() {
       this.$v.$reset();
-      this.username = "";
       this.email = "";
       this.password_confirmation = "";
       this.password = "";
@@ -154,13 +141,6 @@ export default {
     }
   },
   computed: {
-    usernameErrors() {
-      const errors = [];
-      if (!this.$v.username.$dirty) return errors;
-      !this.$v.username.maxLength && errors.push("字符不能超过10个");
-      !this.$v.username.required && errors.push("名字不能为空");
-      return errors;
-    },
     emailErrors() {
       const errors = [];
       if (!this.$v.email.$dirty) return errors;

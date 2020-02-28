@@ -1,5 +1,5 @@
 <template>
-  <div class="useredit">
+  <div class="profile">
     <v-container>
       <v-form ref="formData" class="white">
         <v-card>
@@ -17,8 +17,7 @@
         </v-card>
         <v-row justify="end">
           <div class="col-md-2">
-            <v-btn class="btn mr-6" color="info" @click="test">修改</v-btn>
-            <v-btn class="btn" color="success" @click="submit">提交</v-btn>
+            <v-btn class="btn" color="success" @click="submit">确认修改</v-btn>
           </div>
         </v-row>
       </v-form>

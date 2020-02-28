@@ -11,11 +11,11 @@
             <v-card-text>
               <v-form @keydown.enter="test">
                 <v-text-field
-                  label="Login"
-                  name="login"
-                  prepend-icon="mdi-anchor"
+                  label="email"
+                  name="email"
+                  prepend-icon="mdi-email"
                   type="text"
-                  v-model="username"
+                  v-model="email"
                 >
                 </v-text-field>
                 <v-text-field
@@ -44,10 +44,9 @@
 </template>
 <script>
 export default {
-  name: "Login",
   data() {
     return {
-      username: "",
+      email: "",
       password: ""
     };
   },
@@ -63,15 +62,15 @@ export default {
   },
   methods: {
     login() {
-      let username = this.username;
+      let email = this.email;
       let password = this.password;
       this.$store
-        .dispatch("login", { username, password })
+        .dispatch("signin", { email, password })
         .then(() => this.$router.push("/"))
         .catch(err => console.log(err));
     },
     register() {
-      this.$router.push("/register");
+      this.$router.push("/signup");
     }
   }
 };
