@@ -153,7 +153,7 @@ export default {
   },
   computed: {
     courseGPA() {
-
+      //每门课的绩点
       var GPA = 0;
       for (var i = 0; i < this.student.courses.inputs.length; i++) {
         if(this.student.courses.inputs[i].分数<60) return GPA=0
@@ -170,6 +170,7 @@ export default {
       return GPA
     },
     averageGPA() {
+      //平均学分绩点
       //假设每门课学分为1
       var aGPA = 0;
       var sumGPA = 0;
